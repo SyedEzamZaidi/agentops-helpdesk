@@ -1,0 +1,331 @@
+swagger: '2.0'
+info:
+  title: AgentOps ServiceNow Connector
+  description: >-
+    Custom connector for ServiceNow ticket CRUD operations from AgentOps
+    Helpdesk agents. NOTE: Currently configured with OAuth 2.0 Authorization
+    Code grant (admin user) as a Day 9 tactical decision. Original architectural
+    intent per ADR-005 is Client Credentials grant with service account
+    agentops_servicenow_svc; see ADR-006 for the deferral rationale.
+  version: '1.0'
+host: dev306311.service-now.com
+basePath: /api/now
+schemes:
+  - https
+consumes: []
+produces: []
+paths:
+  /table/incident:
+    get:
+      responses:
+        default:
+          description: default
+          schema:
+            type: object
+            properties:
+              result:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: number
+                    short_description:
+                      type: string
+                      description: short_description
+                    state:
+                      type: string
+                      description: state
+                    priority:
+                      type: string
+                      description: priority
+                    sys_id:
+                      type: string
+                      description: sys_id
+                description: result
+      summary: Get incidents
+      description: >-
+        Retrieves a list of ServiceNow incidents matching the specified filter.
+        Supports query, field selection, and result limiting.
+      operationId: GetIncidents
+      x-ms-visibility: important
+      parameters:
+        - name: sysparm_query
+          in: query
+          required: false
+          type: string
+        - name: sysparm_limit
+          in: query
+          required: false
+          type: integer
+        - name: sysparm_fields
+          in: query
+          required: false
+          type: string
+          default: number,short_description,state,priority,sys_id,caller_id,opened_at
+          description: >-
+            Comma-separated list of fields to return. Defaults to curated
+            7-field summary.
+          x-ms-summary: Fields to return
+        - name: sysparm_display_value
+          in: query
+          required: false
+          type: boolean
+          default: true
+          description: >-
+            Set to true to resolve reference fields (e.g., caller_id) to display
+            names instead of sys_ids.
+          x-ms-summary: Resolve references
+        - name: Accept
+          in: header
+          required: false
+          type: string
+    post:
+      responses:
+        default:
+          description: default
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    description: number
+                  short_description:
+                    type: string
+                    description: short_description
+                  state:
+                    type: string
+                    description: state
+                  priority:
+                    type: string
+                    description: priority
+                  sys_id:
+                    type: string
+                    description: sys_id
+                  caller_id:
+                    type: string
+                    description: caller_id
+                  opened_at:
+                    type: string
+                    description: opened_at
+                description: result
+      summary: Create incident
+      description: >-
+        Creates a new ServiceNow incident. Returns the created record with
+        system-assigned number and sys_id.
+      operationId: CreateIncident
+      x-ms-visibility: important
+      parameters:
+        - name: sysparm_fields
+          in: query
+          required: false
+          type: string
+          default: number,short_description,state,priority,sys_id,caller_id,opened_at
+          description: >-
+            Comma-separated list of fields to return. Defaults to curated
+            7-field summary.
+          x-ms-summary: Fields to return
+        - name: sysparm_display_value
+          in: query
+          required: false
+          type: string
+          default: '"true"'
+          description: >-
+            Set to true to resolve reference fields to display names instead of
+            sys_ids.
+          x-ms-summary: Resolve references
+        - name: Accept
+          in: header
+          required: false
+          type: string
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            properties:
+              short_description:
+                type: string
+                description: short_description
+              caller_id:
+                type: string
+                description: caller_id
+              priority:
+                type: string
+                description: priority
+              category:
+                type: string
+                description: category
+              description:
+                type: string
+                description: description
+  /table/incident/1c741bd70b2322007518478d83673af3: {}
+  /table/incident/{sys_id}:
+    get:
+      responses:
+        default:
+          description: default
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    description: number
+                  short_description:
+                    type: string
+                    description: short_description
+                  state:
+                    type: string
+                    description: state
+                  priority:
+                    type: string
+                    description: priority
+                  sys_id:
+                    type: string
+                    description: sys_id
+                  caller_id:
+                    type: string
+                    description: caller_id
+                  opened_at:
+                    type: string
+                    description: opened_at
+                description: result
+      summary: Get incident by ID
+      description: >-
+        Retrieves a single ServiceNow incident by its sys_id. Returns the full
+        incident record with optional field filtering.
+      operationId: GetIncidentById
+      x-ms-visibility: important
+      parameters:
+        - name: sys_id
+          in: path
+          required: true
+          type: string
+        - name: sysparm_fields
+          in: query
+          required: false
+          type: string
+          default: number,short_description,state,priority,sys_id,caller_id,opened_at
+          description: >-
+            Comma-separated list of fields to return. Defaults to curated
+            7-field summary.
+          x-ms-summary: Fields to return
+        - name: sysparm_display_value
+          in: query
+          required: false
+          type: boolean
+          default: true
+          description: >-
+            Set to true to resolve reference fields to display names instead of
+            sys_ids.
+          x-ms-summary: Resolve references
+        - name: Accept
+          in: header
+          required: false
+          type: string
+    patch:
+      responses:
+        default:
+          description: default
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    description: number
+                  short_description:
+                    type: string
+                    description: short_description
+                  state:
+                    type: string
+                    description: state
+                  priority:
+                    type: string
+                    description: priority
+                  sys_id:
+                    type: string
+                    description: sys_id
+                  caller_id:
+                    type: string
+                    description: caller_id
+                  opened_at:
+                    type: string
+                    description: opened_at
+                description: result
+      summary: Update incident
+      description: >-
+        Updates fields on an existing ServiceNow incident identified by sys_id.
+        Returns the updated record.
+      operationId: UpdateIncident
+      x-ms-visibility: important
+      parameters:
+        - name: sys_id
+          in: path
+          required: true
+          type: string
+        - name: sysparm_fields
+          in: query
+          required: false
+          type: string
+          default: number,short_description,state,priority,sys_id,caller_id,opened_at
+          description: Comma-separated list of fields to return.
+          x-ms-summary: Fields to return
+          x-ms-visibility: important
+        - name: sysparm_display_value
+          in: query
+          required: false
+          type: string
+          default: '"true"'
+          description: Set to true to resolve reference fields to display names.
+          x-ms-summary: Resolve references
+          x-ms-visibility: important
+        - name: Accept
+          in: header
+          required: false
+          type: string
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            properties:
+              state:
+                type: string
+                description: state
+              work_notes:
+                type: string
+                description: work_notes
+              priority:
+                type: string
+                description: priority
+definitions: {}
+parameters: {}
+responses: {}
+security:
+  - oauth2-auth: []
+tags: []
+securityDefinitions:
+  oauth2-auth:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: https://dev306311.service-now.com/oauth_auth.do
+    tokenUrl: https://dev306311.service-now.com/oauth_token.do
+    scopes: {}
