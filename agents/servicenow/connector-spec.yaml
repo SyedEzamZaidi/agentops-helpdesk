@@ -3,10 +3,8 @@ info:
   title: AgentOps ServiceNow Connector
   description: >-
     Custom connector for ServiceNow ticket CRUD operations from AgentOps
-    Helpdesk agents. NOTE: Currently configured with OAuth 2.0 Authorization
-    Code grant (admin user) as a Day 9 tactical decision. Original architectural
-    intent per ADR-005 is Client Credentials grant with service account
-    agentops_servicenow_svc; see ADR-006 for the deferral rationale.
+    Helpdesk agents. Uses OAuth 2.0 Client Credentials grant with service
+    account agentops_servicenow_svc.
   version: '1.0'
 host: dev306311.service-now.com
 basePath: /api/now
@@ -114,9 +112,7 @@ paths:
                     description: opened_at
                 description: result
       summary: Create incident
-      description: >-
-        Creates a new ServiceNow incident. Returns the created record with
-        system-assigned number and sys_id.
+      description: Creates a new ServiceNow incident...
       operationId: CreateIncident
       x-ms-visibility: important
       parameters:
@@ -154,19 +150,37 @@ paths:
             properties:
               short_description:
                 type: string
-                description: short_description
+                description: Brief one-line summary of the issue
               caller_id:
                 type: string
-                description: caller_id
-              priority:
-                type: string
-                description: priority
+                description: sys_id of the user the ticket is for
               category:
                 type: string
-                description: category
+                description: >-
+                  Top-level classification (e.g., hardware, software, network,
+                  inquiry)
+              subcategory:
+                type: string
+                description: Secondary classification within the category
+              urgency:
+                type: string
+                description: >-
+                  How quickly the user needs resolution (1=High, 2=Medium,
+                  3=Low)
+              impact:
+                type: string
+                description: Scope of business impact (1=High, 2=Medium, 3=Low)
               description:
                 type: string
-                description: description
+                description: Fuller detail beyond the short_description
+              u_agent_name:
+                type: string
+                description: Name of the AI agent that originated this ticket
+              u_origin_query:
+                type: string
+                description: >-
+                  The original user message or system event that produced this
+                  ticket
   /table/incident/1c741bd70b2322007518478d83673af3: {}
   /table/incident/{sys_id}:
     get:
@@ -267,9 +281,7 @@ paths:
                     description: opened_at
                 description: result
       summary: Update incident
-      description: >-
-        Updates fields on an existing ServiceNow incident identified by sys_id.
-        Returns the updated record.
+      description: Update incident
       operationId: UpdateIncident
       x-ms-visibility: important
       parameters:
@@ -309,13 +321,43 @@ paths:
             properties:
               state:
                 type: string
-                description: state
+                description: >-
+                  Numeric state code (1=New, 2=In Progress, 3=On Hold,
+                  6=Resolved, 7=Closed, 8=Canceled)
               work_notes:
                 type: string
-                description: work_notes
-              priority:
+                description: Internal notes visible to IT staff only, not the caller
+              comments:
                 type: string
-                description: priority
+                description: User-visible activity log entry, visible to the caller
+              short_description:
+                type: string
+                description: Brief one-line summary of the issue
+              description:
+                type: string
+                description: Fuller detail beyond the short_description
+              category:
+                type: string
+                description: >-
+                  Top-level classification (e.g., hardware, software, network,
+                  inquiry)
+              subcategory:
+                type: string
+                description: Secondary classification within the category
+              urgency:
+                type: string
+                description: How quickly resolution is needed (1=High, 2=Medium, 3=Low)
+              impact:
+                type: string
+                description: Scope of business impact (1=High, 2=Medium, 3=Low)
+              u_agent_name:
+                type: string
+                description: Name of the AI agent that originated this update
+              u_origin_query:
+                type: string
+                description: >-
+                  The original user message or system event that produced this
+                  update
 definitions: {}
 parameters: {}
 responses: {}
