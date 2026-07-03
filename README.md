@@ -23,22 +23,5 @@ Also prepping for Microsoft AB-620.
 
 ## Status
 
-Nothing works yet. Repo just created on May 4, 2026. Goal: working multi-agent demo by end of May 2026.
+Oauth connection setup with ServiceNow. Triage agent is working.
 
-What's planned (will check off as I go):
-
-- [ ] Triage Agent
-- [ ] Knowledge Agent with RAG
-- [ ] ServiceNow Agent
-- [ ] Remediation Agent with human approval
-- [ ] Escalation + telemetry
-- [ ] Solution-based ALM with CI/CD
-- [ ] DLP and responsible AI guardrails
-
-## Docs
-
-ADRs in `docs/adr/`. Architecture diagrams in `docs/architecture/`. I'll add runbooks as I run into things worth documenting.
-
-## License
-
-MIT.
