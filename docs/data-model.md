@@ -12,8 +12,8 @@ One row per request routed by the Triage agent. Ownership: user or team. Auditin
 
 | Column | Type | Notes |
 |---|---|---|
-| Name (primary) | Text | Built by the flow: category plus the first 50 characters of the message |
-| User Message | Multiple lines | Raw text from the employee |
+| Name (primary) | Text | Built by the flow: category plus the first 50 characters of the summary |
+| Request Summary | Multiple lines | AI-generated one-sentence summary of the request, including conversation context |
 | Category | Choice (Request Category) | Triage decision |
 | Routing Reason | Multiple lines | Agent's short explanation, used for debugging and evaluation |
 | Handled By | Choice | Triage, Knowledge, ServiceNow, Remediation, Escalation |
