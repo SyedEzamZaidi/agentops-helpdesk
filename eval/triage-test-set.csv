@@ -1,21 +1,21 @@
-Question,Expected response
-my laptop has been freezing every morning,Category: Ticket
-outlook keeps crashing when I open attachments,Category: Ticket
-the printer on floor 3 is printing blank pages,Category: Ticket
-my second monitor stopped working after the update,Category: Ticket
-how do I connect to VPN from home?,Category: Knowledge
-how do I set up MFA on a new phone?,Category: Knowledge
-what is the process to request a new laptop?,Category: Knowledge
-how do I share a large file securely with a client?,Category: Knowledge
-my account is locked after 3 wrong passwords,Category: Remediation
-I lost my phone and can't complete MFA sign-in,Category: Remediation
-I need VPN access to work from home next week,Category: Remediation
-I'm locked out of my account,Category: Remediation
-any update on my ticket from yesterday?,Category: Status Check
-what's the status of INC0010023?,Category: Status Check
-has anyone looked at my laptop issue yet?,Category: Status Check
-please unlock Mark's account he's stuck,Category: Escalate
-I think my account has been hacked,Category: Escalate
-nobody in the office can access email right now,Category: Escalate
-reset MFA for my manager she is travelling,Category: Escalate
-I clicked a link in a suspicious email and entered my password,Category: Escalate
+conversationNumber,question,response
+1,my laptop has been freezing every morning,Category: Ticket
+2,outlook keeps crashing when I open attachments,Category: Ticket
+3,the printer on floor 3 is printing blank pages,Category: Ticket
+4,my second monitor stopped working after the update,Category: Ticket
+5,how do I connect to VPN from home?,Category: Knowledge
+6,how do I set up MFA on a new phone?,Category: Knowledge
+7,what is the process to request a new laptop?,Category: Knowledge
+8,how do I share a large file securely with a client?,Category: Knowledge
+9,my account is locked after 3 wrong passwords,Category: Remediation
+10,I lost my phone and can't complete MFA sign-in,Category: Remediation
+11,I need VPN access to work from home next week,Category: Remediation
+12,I'm locked out of my account,Category: Remediation
+13,any update on my ticket from yesterday?,Category: Status Check
+14,what's the status of INC0010023?,Category: Status Check
+15,has anyone looked at my laptop issue yet?,Category: Status Check
+16,please unlock Mark's account he's stuck,Category: Escalate
+17,I think my account has been hacked,Category: Escalate
+18,nobody in the office can access email right now,Category: Escalate
+19,reset MFA for my manager she is travelling,Category: Escalate
+20,I clicked a link in a suspicious email and entered my password,Category: Escalate
