@@ -36,6 +36,21 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 - [Data model](docs/data-model.md)
 - [Design decisions](docs/decisions.md)
 
+## Build plan
+
+Built top-down, following the path a request takes.
+
+| Step | Build | Status |
+|---|---|---|
+| 1 | Dataverse tables, Entra test users and groups | Done |
+| 2 | Triage agent (classification only) | In progress |
+| 3 | Log Routing Decision flow, attached to Triage | Started |
+| 4 | ServiceNow agent and Create Incident flow | |
+| 5 | Remediation agent, rules, approval and execution flows | |
+| 6 | Knowledge agent with SharePoint | |
+| 7 | IT Ops console (model-driven app) | |
+| 8 | Publish to Teams, evaluation, demo | |
+
 ## Build log
 
 | Date | Milestone |
