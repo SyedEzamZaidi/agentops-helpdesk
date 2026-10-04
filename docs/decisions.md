@@ -84,3 +84,15 @@ Short record of the choices made, why, and what was rejected.
 ### D20: Naming
 **Decision:** Agent flows are named `wf_<Agent>_<Action>` (e.g. `wf_Triage_LogRoutingDecision`), and the tool on the agent carries the same name. The plain-language tool description is what the orchestrator uses to choose the tool.
 **Why:** One name across the agent, the flow and the solution makes components traceable; the description carries the meaning for the model.
+
+### D21: Child agents for shared trust, a connected agent for Remediation
+**Decision:** Knowledge and ServiceNow are child agents of the helpdesk agent. Remediation is a separate, connected agent.
+**Why:** Child agents decompose one agent's job where the parts share trust and conversation context. Remediation changes identities, so it runs as its own agent with its own least-privilege credentials, approval rules, evaluation and release cycle; Triage can request a fix but never holds the permissions to make one.
+
+### D22: Determinism in proportion to the cost of error
+**Decision:** Hand-offs whose failure is harmless (Triage to Knowledge) are routed by the model within the conversation. Anything that changes an account runs through a Dataverse-triggered flow with eligibility rules and human approval.
+**Why:** A misrouted how-to question costs one wrong answer and is still logged. A misrouted account change is a security incident. Asynchronous, rule-driven flows are auditable and cannot be talked into acting. A Dataverse trigger was rejected for the Knowledge hand-off because it runs outside the conversation, where the user is waiting for the answer.
+
+### D23: Knowledge lives only in the specialist agent
+**Decision:** The SharePoint knowledge source is attached to `ag_Knowledge` only, scoped to the *KB Articles* library; general knowledge and web search are off.
+**Why:** If the routing agent holds knowledge it can answer directly and bypass classification and logging. Scoping to one library keeps retrieval precise and answers permission-trimmed to what each user can read.

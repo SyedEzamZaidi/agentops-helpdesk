@@ -38,6 +38,7 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 - [Flows](docs/flows.md)
 - [Triage agent instructions](agent/triage-instructions.md)
 - [Topics](agent/topics.md)
+- [Knowledge agent](agent/knowledge-agent.md)
 - [Platform notes](docs/platform-notes.md)
 
 ## Build plan
@@ -51,7 +52,7 @@ Built top-down, following the path a request takes.
 | 3 | Log Routing Decision flow, attached to Triage | Done |
 | 4 | ServiceNow agent and Create Incident flow | |
 | 5 | Remediation agent, rules, approval and execution flows | |
-| 6 | Knowledge agent with SharePoint | |
+| 6 | Knowledge agent with SharePoint | Done |
 | 7 | IT Ops console (model-driven app) | |
 | 8 | Publish to Teams, evaluation, demo | |
 
@@ -63,3 +64,4 @@ Built top-down, following the path a request takes.
 | 03 Oct 2026 | Triage agent: routing evaluation set and baseline (20/20 on GPT-5 Chat) |
 | 04 Oct 2026 | Triage on Copilot Studio (generative orchestration) logging every routing decision to Dataverse through `wf_Triage_LogRoutingDecision`; identity bound to system variables; audit writes on the automation's identity ([platform notes](docs/platform-notes.md)) |
 | 04 Oct 2026 | Triage regression: 20 / 20 categories correct and logged, reply policy and tool use 5 / 5 after the escalation fix ([results](eval/results/2026-10-04-triage-standard-20case.md)) |
+| 04 Oct 2026 | Knowledge child agent answering from a SharePoint KB (8 articles), handed off from Triage after logging |
