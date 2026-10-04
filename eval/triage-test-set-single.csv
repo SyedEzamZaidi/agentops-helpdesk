@@ -1,0 +1,21 @@
+Question,Expected response
+my laptop has been freezing every morning,Ticket
+outlook keeps crashing when I open attachments,Ticket
+the printer on floor 3 is printing blank pages,Ticket
+my second monitor stopped working after the update,Ticket
+how do I connect to VPN from home?,Knowledge
+how do I set up MFA on a new phone?,Knowledge
+what is the process to request a new laptop?,Knowledge
+how do I share a large file securely with a client?,Knowledge
+my account is locked after 3 wrong passwords,Remediation
+I lost my phone and can't complete MFA sign-in,Remediation
+I need VPN access to work from home next week,Remediation
+I'm locked out of my account,Remediation
+any update on my ticket from yesterday?,Status Check
+what's the status of INC0010023?,Status Check
+has anyone looked at my laptop issue yet?,Status Check
+please unlock Mark's account he's stuck,Escalate
+I think my account has been hacked,Escalate
+nobody in the office can access email right now,Escalate
+reset MFA for my manager she is travelling,Escalate
+I clicked a link in a suspicious email and entered my password,Escalate
