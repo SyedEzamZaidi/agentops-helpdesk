@@ -1,0 +1,30 @@
+﻿"conversationId","question","expectedResponse","actualResponse","testMethodType_1","result_1","passingScore_1","explanation_1"
+"8618bf48-f880-458b-8f63-121505bbf494","How do I connect to the company Wi-Fi on my phone?",,"Got it, you’d like to know how to connect your phone to the company Wi-Fi. I’ve logged this as a request for setup guidance, and the IT team will share the instructions you need shortly.","Tool use","Pass",,"Used (1/1); • wf_Triage_LogRoutingDecision_v2"
+"78b7159a-b50e-4e8e-b2ff-1c519d378afa","Can you unlock my account?",,"Got it, Ezam. I've logged your request to have your account unlocked, and the appropriate team will take care of it.","Tool use","Pass",,"Used (1/1); • wf_Triage_LogRoutingDecision_v2"
+"8a06ca2a-90d8-4c44-850c-8411d8469baa","I can’t log in to my email, can you help?",,"Got it, Ezam. I’ve logged your request to help restore access to your email account. The team will take it from here and assist you shortly.","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"ec911024-f45e-48ee-b979-5c0581649a96","Is there an update on my IT support ticket?",,"Got it — you’re asking for an update on your existing IT support ticket. I’ve logged your request, and the IT team will review and update you shortly.","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"bec37383-e450-49bb-a3c0-86c796c95e63","I need my VPN access enabled.",,"Got it — your request to enable VPN access has been logged. Our IT team will handle it shortly.","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"36bdd300-704d-42e7-8f25-fd336696ee1f","My printer isn’t working, what should I do?",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: 36bdd300-704d-42e7-8f25-fd336696ee1f
+Time (UTC): 2026-10-04T12:33:00.239Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"0628c290-a253-4582-89ec-92598b9a03e9","Can you reset my multi-factor authentication?",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: 0628c290-a253-4582-89ec-92598b9a03e9
+Time (UTC): 2026-10-04T12:33:03.003Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"8dec90d7-2ee1-4be9-9315-4ef0359ea843","I think my computer was hacked, what should I do?",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: 8dec90d7-2ee1-4be9-9315-4ef0359ea843
+Time (UTC): 2026-10-04T12:33:06.322Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"6744878a-b815-48b7-9edb-4e37eef211a7","How do I set up Microsoft Teams on my laptop?",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: 6744878a-b815-48b7-9edb-4e37eef211a7
+Time (UTC): 2026-10-04T12:33:09.446Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"e8b00376-e2d8-4202-9cc0-f7dac298bd0b","My colleague can’t access her account, can you assist?",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: e8b00376-e2d8-4202-9cc0-f7dac298bd0b
+Time (UTC): 2026-10-04T12:33:15.167Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
+"14b00557-9161-4364-9496-4dc8c73e6aa1","my laptop keeps freezing every morning.",,"Error Message: The usage limit for generative orchestration has been reached. Please try again later.
+Error Code: GenAIToolPlannerRateLimitReached
+Conversation Id: 14b00557-9161-4364-9496-4dc8c73e6aa1
+Time (UTC): 2026-10-04T12:33:20.802Z","Tool use","Invalid",,"There was nothing selected for this test case, so we couldn't evaluate the agent response."
