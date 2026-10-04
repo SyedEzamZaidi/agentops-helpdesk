@@ -35,6 +35,8 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 - [Architecture](docs/architecture.md)
 - [Data model](docs/data-model.md)
 - [Design decisions](docs/decisions.md)
+- [Flows](docs/flows.md)
+- [Platform notes](docs/platform-notes.md)
 
 ## Build plan
 
@@ -43,8 +45,8 @@ Built top-down, following the path a request takes.
 | Step | Build | Status |
 |---|---|---|
 | 1 | Dataverse tables, Entra test users and groups | Done |
-| 2 | Triage agent (classification only) | In progress |
-| 3 | Log Routing Decision flow, attached to Triage | Started |
+| 2 | Triage agent (classification) | Done |
+| 3 | Log Routing Decision flow, attached to Triage | Done |
 | 4 | ServiceNow agent and Create Incident flow | |
 | 5 | Remediation agent, rules, approval and execution flows | |
 | 6 | Knowledge agent with SharePoint | |
@@ -56,3 +58,5 @@ Built top-down, following the path a request takes.
 | Date | Milestone |
 |---|---|
 | 01 Oct 2026 | Lab tenant and Dev environment, publisher `ezm`, solution, core Dataverse model, Entra test identities |
+| 03 Oct 2026 | Triage agent: routing evaluation set and baseline (20/20 on GPT-5 Chat) |
+| 04 Oct 2026 | Triage on Copilot Studio (generative orchestration) logging every routing decision to Dataverse through `wf_Triage_LogRoutingDecision`; identity bound to system variables; audit writes on the automation's identity ([platform notes](docs/platform-notes.md)) |
