@@ -1,0 +1,21 @@
+question,expected_category,logged_category,correct,requester_email_set,conversation_id,run
+my laptop has been freezing every morning,Ticket,Ticket,True,True,b5b61277-72d2-4e26-ab31-67f6fea3b387,2026-10-04-1814-triage-standard-20case.csv
+outlook keeps crashing when I open attachments,Ticket,Ticket,True,True,e67b9e76-2df5-42fa-87f4-4d45f672a96f,2026-10-04-1814-triage-standard-20case.csv
+the printer on floor 3 is printing blank pages,Ticket,Ticket,True,True,4855d50a-dbd8-4d1c-b071-d840cd2c2312,2026-10-04-1814-triage-standard-20case.csv
+my second monitor stopped working after the update,Ticket,Ticket,True,True,743fe927-96cc-4b72-b751-476808ee2895,2026-10-04-1814-triage-standard-20case.csv
+how do I connect to VPN from home?,Knowledge,Knowledge,True,True,48e6ff37-b1b1-4d31-a499-8c089fe46588,2026-10-04-1814-triage-standard-20case.csv
+how do I set up MFA on a new phone?,Knowledge,Knowledge,True,True,60b58c25-a996-4a92-94b3-321508f4d63e,2026-10-04-1830-triage-rerun-batch1.csv
+what is the process to request a new laptop?,Knowledge,Knowledge,True,True,49e27ca0-71a6-4f9a-afe5-bf556832378c,2026-10-04-1830-triage-rerun-batch1.csv
+how do I share a large file securely with a client?,Knowledge,Knowledge,True,True,504d9df3-0cb8-48fd-822e-111b8af7bdc3,2026-10-04-1814-triage-standard-20case.csv
+my account is locked after 3 wrong passwords,Remediation,Remediation,True,True,af4dcbf2-4af7-495e-8921-1b181d8540e7,2026-10-04-1814-triage-standard-20case.csv
+I lost my phone and can't complete MFA sign-in,Remediation,Remediation,True,True,7d8e5e8a-435b-4fd8-ab80-dd75d23e6b36,2026-10-04-1830-triage-rerun-batch1.csv
+I need VPN access to work from home next week,Remediation,Remediation,True,True,2d01838c-8066-40e6-88a3-486cf80d4b6f,2026-10-04-1814-triage-standard-20case.csv
+I'm locked out of my account,Remediation,Remediation,True,True,373188f6-6a33-4e0e-9a57-93be6be2356a,2026-10-04-1814-triage-standard-20case.csv
+any update on my ticket from yesterday?,Status Check,Status Check,True,True,ae494dba-66ea-471c-8e27-1f9a762acba5,2026-10-04-1814-triage-standard-20case.csv
+what's the status of INC0010023?,Status Check,Status Check,True,True,5fd0a965-00d5-4a79-8e8b-676356963212,2026-10-04-1830-triage-rerun-batch1.csv
+has anyone looked at my laptop issue yet?,Status Check,Status Check,True,True,c3dbfbee-8453-460c-8a2c-6b4d4fdf1aee,2026-10-04-1830-triage-rerun-batch1.csv
+please unlock Mark's account he's stuck,Escalate,Escalate,True,True,68b5837e-091b-4655-a78f-2fa6673597e7,2026-10-04-1912-triage-rerun-batch2.csv
+I think my account has been hacked,Escalate,Escalate,True,True,add23e9f-d62a-4511-9c31-c05516a8dca4,2026-10-04-1912-triage-rerun-batch2.csv
+nobody in the office can access email right now,Escalate,Escalate,True,True,dc0793f9-3b97-46d6-b790-884a0a496688,2026-10-04-1912-triage-rerun-batch2.csv
+reset MFA for my manager she is travelling,Escalate,Escalate,True,True,dda5541d-c640-4f6e-bd04-5bb5ef781c80,2026-10-04-1912-triage-rerun-batch2.csv
+I clicked a link in a suspicious email and entered my password,Escalate,Escalate,True,True,e0cfbe06-b519-46db-904d-1a93f46485e1,2026-10-04-1912-triage-rerun-batch2.csv

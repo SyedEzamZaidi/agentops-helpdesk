@@ -39,4 +39,20 @@ Fixes applied: actions 1 and 2 ([instructions](../../agent/triage-instructions.m
 
 - Both security incidents ("my account has been hacked", "clicked a link … entered my password") now call the logging tool and tell the user to change their password and contact IT security.
 - Requests about another person's account (Mark's unlock, manager's MFA) are logged and escalated without promising the change.
-- All 20 cases have now executed. Category accuracy: pending the Agent Decisions export.
+- All 20 cases have now executed.
+
+## Category accuracy (from Dataverse)
+
+Each executed case was joined to its Agent Decision row on Conversation ID; the logged choice value was compared with the expected category. Per-case sheet: [2026-10-04-triage-category-scoring.csv](2026-10-04-triage-category-scoring.csv).
+
+| Category | Correct |
+|---|---|
+| Ticket | 4 / 4 |
+| Knowledge | 4 / 4 |
+| Remediation | 4 / 4 |
+| Status Check | 3 / 3 |
+| Escalate | 5 / 5 |
+| **Total** | **20 / 20** |
+
+- Every case produced exactly one Agent Decision row (20 / 20 logged), with Requester Email from the signed-in user and the Conversation ID set.
+- Matches the routing baseline from 03 Oct (20 / 20), now measured on what the agent logged rather than what it printed.
