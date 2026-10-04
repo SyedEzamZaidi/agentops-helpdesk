@@ -17,6 +17,6 @@ Smoke run on Copilot Studio's generated question set (11 single-turn cases) to v
 
 ## Actions
 
-1. **Reply policy:** add an explicit rule against time language ("shortly", "soon") to the agent instructions; enforce with the *Reply policy check* custom grader.
+1. **Reply policy:** add an explicit rule against time language ("shortly", "soon") to the agent instructions; enforce with the *Reply policy check* custom grader. **Done 04 Oct:** instructions rewritten in full (old reply block removed, no-timeline rule added); see [agent/triage-instructions.md](../../agent/triage-instructions.md).
 2. **Throttling:** run evaluations in batches of 5 with a pause between batches.
 3. **Coverage:** run the fixed [20-case set](../triage-test-set-single.csv) with the expected tool set on every case; score category accuracy from Agent Decision rows joined on Conversation ID.
