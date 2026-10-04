@@ -37,6 +37,7 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 - [Design decisions](docs/decisions.md)
 - [Flows](docs/flows.md)
 - [Triage agent instructions](agent/triage-instructions.md)
+- [Topics](agent/topics.md)
 - [Platform notes](docs/platform-notes.md)
 
 ## Build plan

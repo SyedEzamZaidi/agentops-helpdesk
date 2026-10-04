@@ -27,3 +27,16 @@
 1. Add to the instructions: never output JSON, tool names or tool parameters to the user.
 2. Redesign the system *Escalate* topic: log the request with Category = Escalate through the same tool, then hand over with a clear message (security incidents get the IT security contact). Add these cases to the regression set with the expected tool.
 3. Rerun the 6 throttled cases in a separate batch, then score category accuracy from Agent Decisions.
+
+## Rerun after fixes
+
+Fixes applied: actions 1 and 2 ([instructions](../../agent/triage-instructions.md), [Escalate topic](../../agent/topics.md)). Graders: *Tool use* (expected tool set per case) and *Reply policy check* (custom); *Answer quality* removed.
+
+| Batch | Cases | Tool use | Reply policy | Raw export |
+|---|---|---|---|---|
+| 1: throttled cases | 5 | n/a (Answer quality only) | No labels, JSON or timelines found on review | [batch 1](../runs/2026-10-04-1830-triage-rerun-batch1.csv) |
+| 2: Escalate + remaining throttled | 5 | **5 / 5** | **5 / 5** | [batch 2](../runs/2026-10-04-1912-triage-rerun-batch2.csv) |
+
+- Both security incidents ("my account has been hacked", "clicked a link … entered my password") now call the logging tool and tell the user to change their password and contact IT security.
+- Requests about another person's account (Mark's unlock, manager's MFA) are logged and escalated without promising the change.
+- All 20 cases have now executed. Category accuracy: pending the Agent Decisions export.
