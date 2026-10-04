@@ -1,0 +1,29 @@
+# Triage regression run: 20-case set, updated instructions
+
+**Date:** 04 Oct 2026 · **Agent:** AgentOps Helpdesk (Standard), GPT-5 Chat · **Instructions:** [agent/triage-instructions.md](../../agent/triage-instructions.md) (04 Oct version)
+**Test set:** [triage-test-set-single.csv](../triage-test-set-single.csv) · **Raw export:** [runs/2026-10-04-1814-triage-standard-20case.csv](../runs/2026-10-04-1814-triage-standard-20case.csv)
+
+## Results
+
+| Check | Result |
+|---|---|
+| Cases executed | 14 / 20 (6 throttled: `GenAIToolPlannerRateLimitReached`) |
+| Timeline / outcome language ("shortly", "soon") | **0 / 14** (smoke run before the instruction change: 4 / 5) |
+| Internal labels in reply text | 0 / 14 |
+| Raw tool arguments echoed to the user | **2 / 14**: JSON with `text`, `text_2`, `text_3`, `explanation_of_tool_call` printed above the reply |
+| Escalate cases captured by the system *Escalate* topic | **2 / 4** executed Escalate cases ("my account has been hacked", "clicked a link … entered my password"): generic "Escalating to a representative is not currently configured" reply, logging tool not called |
+| Category accuracy | Pending: scored from Agent Decision rows joined on Conversation ID |
+
+*Answer quality* is reported by the export but is not an acceptance metric for a router: it fails replies that log a request instead of answering it, which is the intended behaviour.
+
+## Findings
+
+1. **Reply policy fix confirmed.** Removing the old reply block and adding the explicit no-timeline rule eliminated timeline promises and label leaks.
+2. **Tool-argument echo (new).** On 2 cases the model printed the tool call's arguments, including internal keys, before its reply. Internal data reaching the user is a policy failure even when the classification is right.
+3. **Security incidents bypass logging (critical).** The built-in *Escalate* system topic is triggered by escalation intent and pre-empts generative orchestration. The two most security-sensitive cases got a placeholder reply and **no Agent Decision row**, so they leave no audit trail.
+
+## Actions
+
+1. Add to the instructions: never output JSON, tool names or tool parameters to the user.
+2. Redesign the system *Escalate* topic: log the request with Category = Escalate through the same tool, then hand over with a clear message (security incidents get the IT security contact). Add these cases to the regression set with the expected tool.
+3. Rerun the 6 throttled cases in a separate batch, then score category accuracy from Agent Decisions.
