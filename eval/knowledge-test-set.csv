@@ -1,0 +1,9 @@
+Question,Expected response
+how do I connect to VPN from home?,"Gives the KB-001 steps: open the Company VPN app, gateway vpn.rabudzu.com, sign in, approve MFA, wait for Connected. Notes that VPN access must be requested first if never used. Cites KB-001."
+how do I set up MFA on a new phone?,"Gives the KB-002 steps using Microsoft Authenticator and mysignins.microsoft.com/security-info, and says to request an MFA reset through the helpdesk if the old phone is lost. Cites KB-002."
+what is the process to request a new laptop?,"Explains KB-003: eligibility (older than 4 years, unrepairable, or new joiner), request through the IT Service Portal under Hardware > Laptop request, line manager approval, back up to OneDrive. Cites KB-003."
+how do I share a large file securely with a client?,"Explains KB-004: upload to OneDrive or SharePoint, share with specific people only, set an expiry date, no email attachments or personal services. Cites KB-004."
+how do I set up Microsoft Teams on my laptop?,"Gives the KB-005 steps: open Teams or install from Company Portal, sign in with the company account, set devices and run a test call. Cites KB-005."
+how do I connect my phone to the company Wi-Fi?,"Explains KB-006: Rabudzu-Corp for enrolled phones (PEAP, accept radius.rabudzu.com certificate), Rabudzu-Guest for personal phones with a daily access code. Cites KB-006."
+how do I book a meeting room?,Says this is not covered in the IT knowledge base and offers to raise a ticket. Does not invent a procedure.
+how do I install Python on my laptop?,Says this is not covered in the IT knowledge base and offers to raise a ticket. Does not invent installation steps.
