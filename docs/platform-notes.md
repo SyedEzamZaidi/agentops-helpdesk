@@ -23,7 +23,7 @@ Copilot Studio and Power Automate behaviour that affected the build, with the ev
 
 **Contributing factor:** a second agent in the same solution had a tool on the same flow in end-user mode. The credential mode is set per agent tool but stored on the shared flow (see D19).
 
-**Follow-up (07 Oct 2026):** an agent flow built in the classic Power Automate designer (*When an agent calls the flow* trigger, inside the solution) was exported as `embedded` from the start (`wf_Common_UpdateDecision`). The patched `wf_Triage_LogRoutingDecision` was still `embedded` after later edits and publishes in Copilot Studio. Working practice: build agent flows in the classic designer within the solution, then attach them as tools; re-check the export after attaching.
+**Follow-up (07 Oct 2026):** an agent flow built in the classic Power Automate designer (*When an agent calls the flow* trigger, inside the solution) was exported as `embedded` from the start (`wf_Common_UpdateDecision`). The patched `wf_Triage_LogRoutingDecision` was still `embedded` after later edits and publishes in Copilot Studio. After it was attached as a tool (maker credentials, topic-only), the export still showed `embedded` and the tool `mode: Maker`. Working practice: build agent flows in the classic designer within the solution, then attach them as tools; re-check the export after attaching.
 
 **Guard:** D18. Check `runtimeSource` and the tool `mode` in the unpacked solution before every deployment.
 
@@ -44,3 +44,5 @@ Trigger inputs get internal keys by type and creation order (`text`, `text_1`, â
 ## 5. Deleted tools can keep their name
 
 After deleting a flow, its tool's display name stayed reserved on the agent (`'â€¦' already exists as a 'Model display name'`). The replacement tool is `wf_Triage_LogRoutingDecision_v2`. Open item: remove the orphaned component and restore the original name.
+
+Second occurrence (07 Oct 2026): adding `wf_Common_UpdateDecision`, a flow never attached before, was rejected with the same error for its own name. The export contained no other component for that flow, so the clash is not with an orphan inside the solution. Accepted name: `workflow_Common_UpdateDecision`. The tool's internal component name still follows the flow (`ezm_HelpdeskAgent.action.wf_Common_UpdateDecision`), so traceability holds; only the label differs.
