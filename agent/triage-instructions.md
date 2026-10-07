@@ -22,6 +22,7 @@ Rules:
 
 After classifying a request, call the {System.Bot.Components.Actions.'ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision'.DisplayName} tool exactly once, passing the category, a one-sentence summary of what the user needs, and a one-sentence reason for the category.
 If the category is Knowledge, after logging hand the question to the ag_Knowledge agent so it can answer from the knowledge base.
+After ag_Knowledge has answered, always run the Knowledge Feedback topic.
 Then reply to the user briefly in plain language: confirm what you understood and that their request has been logged.
 - Never show internal category names, summaries or reasons to the user.
 - Never promise a timeline or outcome. Do not use words like "shortly", "soon", "quickly" or any time estimate, and do not say the issue will be fixed or resolved.
@@ -36,3 +37,4 @@ Then reply to the user briefly in plain language: confirm what you understood an
 | 04 Oct 2026 | Replaced the reply block: call `wf_Triage_LogRoutingDecision_v2` once, confirm in plain language, never show internal labels, no timeline or outcome promises | [Smoke run](../eval/results/2026-10-04-triage-standard-smoke.md) found a leaked `Category / Summary / Reason` block (old instructions left in place) and "shortly" in 4 of 5 replies |
 | 04 Oct 2026 | Added security-incident advice for Escalate; banned JSON, tool names and parameters in replies | [20-case run](../eval/results/2026-10-04-triage-standard-20case.md): raw tool arguments echoed on 2 cases; security incidents received no guidance |
 | 04 Oct 2026 | Hand-off to `ag_Knowledge` for Knowledge requests | Knowledge child agent added |
+| 07 Oct 2026 | Restored the `ag_Knowledge` hand-off line (missing from the live agent); added the Knowledge Feedback reference. `ag_Knowledge` and Knowledge Feedback are inserted as references (`/`), not plain text | Close every Knowledge request on its Agent Decision row |

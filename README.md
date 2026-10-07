@@ -65,3 +65,4 @@ Built top-down, following the path a request takes.
 | 04 Oct 2026 | Triage on Copilot Studio (generative orchestration) logging every routing decision to Dataverse through `wf_Triage_LogRoutingDecision`; identity bound to system variables; audit writes on the automation's identity ([platform notes](docs/platform-notes.md)) |
 | 04 Oct 2026 | Triage regression: 20 / 20 categories correct and logged, reply policy and tool use 5 / 5 after the escalation fix ([results](eval/results/2026-10-04-triage-standard-20case.md)) |
 | 04 Oct 2026 | Knowledge child agent answering from a SharePoint KB (8 articles), handed off from Triage after logging |
+| 07 Oct 2026 | Knowledge requests closed on the same Agent Decision row: Knowledge Feedback topic calls `wf_Common_UpdateDecision` (Handled By = Knowledge, Outcome = Answered, cited article) |

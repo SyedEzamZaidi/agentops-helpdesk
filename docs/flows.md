@@ -96,3 +96,9 @@ Shared flow that records how a request ended. Called by the specialist agents (K
 
 ### Unit test (07 Oct 2026)
 Inputs: an existing conversation, HandledBy = ServiceNow, Outcome = Ticket Created, IncidentNumber = INC0000TEST, SourceArticle empty. Result: Handled By and Outcome updated, Incident Number set, Source Article and all Triage fields unchanged. The first run left Handled By and Outcome unchanged because the two choice fields were not mapped in *Update decision*; caught by the isolated test before the flow was attached to any agent.
+
+### Defect found in integration (07 Oct 2026)
+**Symptom:** first call from the Knowledge Feedback topic failed in the agent with `FlowActionBadGateway / NoResponse`. Run history: *Update a row* rejected `ezm_handledby = 0` (outside the valid range).
+**Diagnosis:** the trigger received exactly `Knowledge`, so the caller was cleared. Every case in the HandledBy Switch was skipped: the case value was `Knowledge ` (trailing space), and Switch matching is exact. `HandledByValue` kept its initial 0. The Default branch did not stop the run, so the 0 reached Dataverse and surfaced as a Dataverse validation error instead of the flow's own `InvalidHandledBy`.
+**Fix:** trailing space removed; all eleven case values checked in Peek code; Terminate (Failed) in both Default branches.
+**Lesson:** the unit test exercised one of the four HandledBy paths. Each case of a mapping Switch needs a test, and a guard branch is only real once a test has hit it.
