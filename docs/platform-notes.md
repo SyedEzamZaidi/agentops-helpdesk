@@ -23,6 +23,8 @@ Copilot Studio and Power Automate behaviour that affected the build, with the ev
 
 **Contributing factor:** a second agent in the same solution had a tool on the same flow in end-user mode. The credential mode is set per agent tool but stored on the shared flow (see D19).
 
+**Follow-up (07 Oct 2026):** an agent flow built in the classic Power Automate designer (*When an agent calls the flow* trigger, inside the solution) was exported as `embedded` from the start (`wf_Common_UpdateDecision`). The patched `wf_Triage_LogRoutingDecision` was still `embedded` after later edits and publishes in Copilot Studio. Working practice: build agent flows in the classic designer within the solution, then attach them as tools; re-check the export after attaching.
+
 **Guard:** D18. Check `runtimeSource` and the tool `mode` in the unpacked solution before every deployment.
 
 Reference: Microsoft Copilot Studio CAT team, [Combining Agent Flows with Agents: Gotchas, Errors, and Patterns](https://microsoft.github.io/mcscatblog/posts/combining-agent-flows-and-agents-gotchas-errors-and-patterns/).

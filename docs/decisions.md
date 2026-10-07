@@ -108,3 +108,7 @@ Short record of the choices made, why, and what was rejected.
 ### D26: Deterministic closing for Knowledge answers; escalation is a path, not an agent
 **Decision:** After a Knowledge answer, a topic asks "Did this solve your problem?" with Yes/No buttons. Yes records Resolved (self-service); No raises a normal-priority ticket. Escalate requests are handled by the ServiceNow agent with high priority, a security or major-incident assignment group and an immediate notification.
 **Why:** The button outcome gives the self-service resolution (deflection) rate and a knowledge gap signal. Escalation and ticketing both end in ServiceNow and differ only in priority and routing, so a separate Escalation agent would add a component without adding capability.
+
+### D27: Interactions for every request, incidents only for work
+**Decision:** In ServiceNow, every request creates an Interaction, closed automatically when the agent resolves it; an Incident is created only for Ticket and Escalate requests and linked to the interaction. Agent performance KPIs are computed from Agent Decision in Dataverse.
+**Why:** IT sees total contact volume and deflection in its own system without inflating incident counts or distorting resolution-time and SLA metrics with self-resolved questions. Dataverse holds the AI-specific data (category, routing reason, cited article, evaluation linkage) that ServiceNow does not.
