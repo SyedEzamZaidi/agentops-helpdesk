@@ -96,3 +96,15 @@ Short record of the choices made, why, and what was rejected.
 ### D23: Knowledge lives only in the specialist agent
 **Decision:** The SharePoint knowledge source is attached to `ag_Knowledge` only, scoped to the *KB Articles* library; general knowledge and web search are off.
 **Why:** If the routing agent holds knowledge it can answer directly and bypass classification and logging. Scoping to one library keeps retrieval precise and answers permission-trimmed to what each user can read.
+
+### D24: One row per request, completed by each stage
+**Decision:** Triage creates the Agent Decision row; the handling agent updates the same row (Handled By, Outcome, Source Article, Incident Number) through one shared flow. Steps with their own lifecycle (Remediation Request) get their own table, linked by lookup.
+**Why:** The row is the request's system of record; one row avoids duplicated fields and de-duplication in every report. The audit log keeps the change history. An event-log table (one row per agent step) is the upgrade path if per-step latency metrics are needed.
+
+### D25: Generic update flow, no branching on caller
+**Decision:** `wf_Common_UpdateDecision` takes the values to write; it does not branch on category or caller. Labels are mapped to choice values in visible Switch cases, optional fields are written only when passed, and the row is located by Conversation ID from the platform.
+**Why:** New agents reuse the flow without changing it. Visible mappings are maintainable without expressions, and conditional writes stop one caller blanking another caller's value.
+
+### D26: Deterministic closing for Knowledge answers; escalation is a path, not an agent
+**Decision:** After a Knowledge answer, a topic asks "Did this solve your problem?" with Yes/No buttons. Yes records Resolved (self-service); No raises a normal-priority ticket. Escalate requests are handled by the ServiceNow agent with high priority, a security or major-incident assignment group and an immediate notification.
+**Why:** The button outcome gives the self-service resolution (deflection) rate and a knowledge gap signal. Escalation and ticketing both end in ServiceNow and differ only in priority and routing, so a separate Escalation agent would add a component without adding capability.
