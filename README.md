@@ -32,6 +32,7 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 
 ## Docs
 
+- [Solution design document](docs/solution-design.md)
 - [Architecture](docs/architecture.md)
 - [Data model](docs/data-model.md)
 - [Design decisions](docs/decisions.md)

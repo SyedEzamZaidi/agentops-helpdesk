@@ -2,9 +2,9 @@
 
 ## End-to-end flow
 
-![AgentOps Helpdesk architecture](diagrams/architecture.png)
+![AgentOps Helpdesk request lifecycle](diagrams/solution-flow.png)
 
-Source: [architecture.drawio](diagrams/architecture.drawio) (open in draw.io) · [PDF](diagrams/architecture.pdf)
+Source: [solution-flow.drawio](diagrams/solution-flow.drawio) (open in draw.io) · [PDF](diagrams/solution-flow.pdf). Solid boxes are built, dashed boxes are planned. The full design is in the [solution design document](solution-design.md).
 
 ## Security model
 

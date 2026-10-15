@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxGraphModel grid="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="clust1" value="&lt;font style='font-size: 16.0px;' face='Helvetica,sans-Serif' color='#333333'&gt;Outside Dataverse (referenced by key, D11)&lt;/font&gt;" style="verticalAlign=top;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#555555;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1" connectable="0">
+      <mxGeometry x="1216.01" y="339.96" width="364.75" height="323.0" as="geometry" />
+    </mxCell>
+    <mxCell id="node1" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Agent Decision  (ezm_agentdecision)&lt;br/&gt;------------------------------------------&lt;br/&gt;PK  Agent Decision ID (GUID)&lt;br/&gt;Name (primary) = request summary&lt;br/&gt;Request Summary&lt;br/&gt;Category  [Request Category]&lt;br/&gt;Routing Reason&lt;br/&gt;Handled By  [choice]&lt;br/&gt;Requester Email&lt;br/&gt;Conversation ID&lt;br/&gt;Incident Number&lt;br/&gt;Outcome  [choice]&lt;br/&gt;Source Article&lt;br/&gt;------------------------------------------&lt;br/&gt;Ownership: user/team, auditing on&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#d97706;fillColor=#fef3c7;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="379.42" y="480.13" width="207.42000000000002" height="205.64999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="node2" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Remediation Request  (ezm_remediationrequest)&lt;br/&gt;------------------------------------------&lt;br/&gt;PK  Remediation Request ID (GUID)&lt;br/&gt;Request Number (primary, REM-00001)&lt;br/&gt;FK  Fix  -&gt; Remediation Catalog&lt;br/&gt;FK  Agent Decision  -&gt; Agent Decision&lt;br/&gt;Requester Email&lt;br/&gt;Target User Email&lt;br/&gt;Request Status  [choice]&lt;br/&gt;Approver | Approver Comments | Decision Date&lt;br/&gt;Incident Number&lt;br/&gt;Run Result&lt;br/&gt;------------------------------------------&lt;br/&gt;Ownership: user/team, auditing on&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#d97706;fillColor=#fef3c7;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="783.34" y="259.51" width="265.16999999999996" height="192.89" as="geometry" />
+    </mxCell>
+    <mxCell id="node6" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Eval Result  (planned)&lt;br/&gt;------------------------------&lt;br/&gt;Run ID | Run Date&lt;br/&gt;FK  Eval Case&lt;br/&gt;FK  Agent Decision&lt;br/&gt;Actual Category&lt;br/&gt;Passed  (Yes/No)&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#d97706;fillColor=#fef3c7;strokeWidth=1;dashed=1;" parent="1" vertex="1">
+      <mxGeometry x="846.72" y="738.13" width="138.41999999999996" height="103.64999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="node7" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Copilot Studio&lt;br/&gt;conversation transcript&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#2563eb;fillColor=#dbeafe;strokeWidth=1;dashed=1;" parent="clust1" vertex="1">
+      <mxGeometry x="112.66000000000008" y="275.05" width="138.42999999999984" height="39.889999999999986" as="geometry" />
+    </mxCell>
+    <mxCell id="node8" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;ServiceNow&lt;br/&gt;Interaction | Incident&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#2563eb;fillColor=#dbeafe;strokeWidth=1;dashed=1;" parent="clust1" vertex="1">
+      <mxGeometry x="118.66000000000008" y="35.05000000000001" width="126.42999999999984" height="39.889999999999986" as="geometry" />
+    </mxCell>
+    <mxCell id="node9" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Microsoft Entra ID&lt;br/&gt;users, departments, managers,&lt;br/&gt;VPN-Users group&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#2563eb;fillColor=#dbeafe;strokeWidth=1;dashed=1;" parent="clust1" vertex="1">
+      <mxGeometry x="92.78999999999996" y="110.67000000000002" width="178.17000000000007" height="52.64999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="node10" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;SharePoint&lt;br/&gt;KB Articles library&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#2563eb;fillColor=#dbeafe;strokeWidth=1;dashed=1;" parent="clust1" vertex="1">
+      <mxGeometry x="125.03999999999996" y="199.05" width="113.67000000000007" height="39.889999999999986" as="geometry" />
+    </mxCell>
+    <mxCell id="node3" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Remediation Catalog  (ezm_remediationcatalog)&lt;br/&gt;------------------------------------------&lt;br/&gt;PK  Remediation Catalog ID (GUID)&lt;br/&gt;Fix Name (primary)&lt;br/&gt;Description&lt;br/&gt;Action Code  [choice]&lt;br/&gt;Risk Level  [choice]&lt;br/&gt;Execution Channel  [choice]&lt;br/&gt;Requires Approval  (Yes/No)&lt;br/&gt;Self Service Only  (Yes/No)&lt;br/&gt;Active  (Yes/No)&lt;br/&gt;Eligible Departments&lt;br/&gt;------------------------------------------&lt;br/&gt;Ownership: organization (reference data)&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#d97706;fillColor=#fef3c7;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="351.67" y="31.5" width="262.92" height="192.89999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="node4" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Global choice: Request Category&lt;br/&gt;(ezm_requestcategory)&lt;br/&gt;Knowledge | Ticket | Remediation |&lt;br/&gt;Status Check | Escalate&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#555555;fillColor=#f3f4f6;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="4.0" y="648.26" width="195.42" height="65.39999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="node5" value="&lt;font style='font-size: 10.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Eval Case  (planned)&lt;br/&gt;------------------------------&lt;br/&gt;Question&lt;br/&gt;Expected Category  [Request Category]&lt;br/&gt;Expected Article&lt;br/&gt;Active&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=#d97706;fillColor=#fef3c7;strokeWidth=1;dashed=1;" parent="1" vertex="1">
+      <mxGeometry x="374.17" y="727.5" width="217.92000000000002" height="90.89999999999998" as="geometry" />
+    </mxCell>
+    <mxCell id="edge2" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;curved=1;exitX=1.000;exitY=0.140;entryX=0.000;entryY=0.766;" parent="1" edge="1" source="node1" target="node2">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="586.93" y="508.9" as="sourcePoint" />
+        <mxPoint x="776.34" y="410.25" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="594.33" y="504.03" />
+          <mxPoint x="609.46" y="494.39" />
+          <mxPoint x="624.75" y="485.03" />
+          <mxPoint x="636.18" y="478.24" />
+          <mxPoint x="659.0" y="465.68" />
+          <mxPoint x="695.01" y="447.26" />
+          <mxPoint x="727.85" y="431.68" />
+          <mxPoint x="760.54" y="417.02" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge2" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge2" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;1 : N  (Agent Decision)&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge6" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;curved=1;exitX=1.000;exitY=0.913;entryX=0.000;entryY=0.356;" parent="1" edge="1" source="node1" target="node6">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="587.11" y="667.99" as="sourcePoint" />
+        <mxPoint x="839.32" y="773.21" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="594.37" y="673.1" />
+          <mxPoint x="609.32" y="683.04" />
+          <mxPoint x="624.54" y="692.49" />
+          <mxPoint x="632.24" y="697.33" />
+          <mxPoint x="662.94" y="713.09" />
+          <mxPoint x="720.61" y="737.33" />
+          <mxPoint x="771.04" y="754.31" />
+          <mxPoint x="818.68" y="768.0" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge6" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge6" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;1 : N&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge7" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.528;entryX=0.000;entryY=0.403;" parent="1" edge="1" source="node1" target="node7">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="587.06" y="588.82" as="sourcePoint" />
+        <mxPoint x="1320.14" y="630.58" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge7" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge7" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Conversation ID&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge8" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;curved=1;exitX=0.778;exitY=0.000;entryX=0.267;entryY=0.000;" parent="1" edge="1" source="node1" target="node8">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="540.96" y="479.82" as="sourcePoint" />
+        <mxPoint x="1360.9" y="370.04" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="556.37" y="455.37" />
+          <mxPoint x="594.83" y="401.77" />
+          <mxPoint x="640.43" y="348.01" />
+          <mxPoint x="692.7" y="298.22" />
+          <mxPoint x="747.87" y="258.02" />
+          <mxPoint x="818.81" y="225.88" />
+          <mxPoint x="904.89" y="211.16" />
+          <mxPoint x="989.58" y="215.49" />
+          <mxPoint x="1073.37" y="233.28" />
+          <mxPoint x="1153.43" y="260.49" />
+          <mxPoint x="1226.9" y="293.06" />
+          <mxPoint x="1290.95" y="326.94" />
+          <mxPoint x="1342.71" y="358.07" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge8" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge8" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Incident Number&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge10" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;curved=1;exitX=1.000;exitY=0.387;entryX=0.000;entryY=0.601;" parent="1" edge="1" source="node1" target="node9">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="587.15" y="559.74" as="sourcePoint" />
+        <mxPoint x="1300.15" y="482.86" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="594.64" y="558.24" />
+          <mxPoint x="609.87" y="555.34" />
+          <mxPoint x="625.13" y="552.6" />
+          <mxPoint x="614.79" y="553.93" />
+          <mxPoint x="680.39" y="543.99" />
+          <mxPoint x="827.58" y="524.78" />
+          <mxPoint x="949.23" y="511.69" />
+          <mxPoint x="1065.85" y="500.77" />
+          <mxPoint x="1172.53" y="491.97" />
+          <mxPoint x="1264.36" y="485.23" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge10" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge10" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Requester Email&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge12" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.487;entryX=0.000;entryY=0.537;" parent="1" edge="1" source="node1" target="node10">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="587.06" y="580.25" as="sourcePoint" />
+        <mxPoint x="1332.58" y="560.65" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge12" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge12" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Source Article&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge9" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.555;entryX=0.000;entryY=0.373;" parent="1" edge="1" source="node2" target="node8">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="1048.71" y="366.66" as="sourcePoint" />
+        <mxPoint x="1326.26" y="389.22" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge9" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge9" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Incident Number&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge11" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;curved=1;exitX=1.000;exitY=0.678;entryX=0.000;entryY=0.098;" parent="1" edge="1" source="node2" target="node9">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="1048.97" y="390.35" as="sourcePoint" />
+        <mxPoint x="1300.49" y="453.76" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="1068.47" y="395.39" />
+          <mxPoint x="1110.08" y="406.09" />
+          <mxPoint x="1152.85" y="417.02" />
+          <mxPoint x="1200.61" y="429.11" />
+          <mxPoint x="1231.41" y="436.81" />
+          <mxPoint x="1247.54" y="440.79" />
+          <mxPoint x="1269.01" y="446.08" />
+          <mxPoint x="1290.25" y="451.27" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge11" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge11" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Requester / Target Email&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge1" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.858;entryX=0.000;entryY=0.139;" parent="1" edge="1" source="node3" target="node2">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="614.84" y="197.14" as="sourcePoint" />
+        <mxPoint x="776.6" y="282.74" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge1" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;1 : N  (Fix)&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge3" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.118;entryX=0.000;entryY=0.629;" parent="1" edge="1" source="node4" target="node1">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="199.44" y="655.97" as="sourcePoint" />
+        <mxPoint x="370.99" y="611.66" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge3" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge3" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Category&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge4" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.858;entryX=0.000;entryY=0.212;" parent="1" edge="1" source="node4" target="node5">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="199.44" y="704.41" as="sourcePoint" />
+        <mxPoint x="365.74" y="744.73" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge4" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge4" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;Expected Category&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge5" style="html=1;endArrow=block;dashed=1;endFill=1;startArrow=none;startFill=0;fillColor=#555555;strokeColor=#555555;strokeWidth=1;rounded=0;exitX=1.000;exitY=0.547;entryX=0.000;entryY=0.474;" parent="1" edge="1" source="node5" target="node6">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="592.56" y="777.23" as="sourcePoint" />
+        <mxPoint x="838.92" y="786.96" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge5" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge5" value="&lt;font style='font-size: 9.0px;' face='Helvetica,sans-Serif' color='#000000'&gt;1 : N&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+  </root>
+</mxGraphModel>
