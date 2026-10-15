@@ -17,7 +17,7 @@ Use only when the user explicitly asks to speak to a human, a live agent or a pe
 
 ## Knowledge Feedback (custom topic)
 
-Records how a Knowledge request ended on the request's Agent Decision row. Step A (built): writes Knowledge / Answered and the cited article as soon as the answer is given, so a conversation abandoned before any feedback is still attributed to the Knowledge agent. Step B (next): Yes/No question that upgrades Outcome to Resolved (self-service) or Not found ([D26](../docs/decisions.md#d26-deterministic-closing-for-knowledge-answers-escalation-is-a-path-not-an-agent)).
+Records how a Knowledge request ended on the request's Agent Decision row in two stages. First it writes Knowledge / Answered and the cited article as soon as the answer is given, so a conversation abandoned before any feedback is still attributed to the Knowledge agent. Then a Yes/No question upgrades Outcome to Resolved (self-service) or Not found ([D26](../docs/decisions.md#d26-deterministic-closing-for-knowledge-answers-escalation-is-a-path-not-an-agent)).
 
 **Trigger:** The agent chooses. Referenced from the parent instructions ("After ag_Knowledge has answered, always run Knowledge Feedback").
 
@@ -33,15 +33,25 @@ The KB article ID cited in the answer just given, for example KB-002. Leave empt
 
 **Nodes:**
 1. Action → `wf_Common_UpdateDecision`: ConversationId = `System.Conversation.Id`, HandledBy = `Knowledge`, Outcome = `Answered`, SourceArticle = `Topic.SourceArticle`, IncidentNumber not set.
-2. End current topic.
+2. Question "Did this solve your problem?": multiple choice `Yes` / `No`, saved to `Topic.Solved` (topic scope).
+3. Condition branches:
+   - **Yes** → Action → `wf_Common_UpdateDecision`: HandledBy = `Knowledge`, Outcome = `Resolved (self-service)` → message "Great, glad that sorted it."
+   - **No** → Action → `wf_Common_UpdateDecision`: HandledBy = `Knowledge`, Outcome = `Not found` → message "Sorry that didn't help. I've recorded it so the IT team can follow up." (raises a ticket once the ServiceNow agent exists)
+   - **All other conditions**: empty; the Answered outcome stands.
+   Neither branch passes SourceArticle or IncidentNumber, so the article recorded in step 1 is kept.
+4. End current topic.
+
+The flow's `status` output is stored in `Topic.Status` and not used; a failed flow call surfaces as a topic error.
 
 | Value | Source | Deterministic |
 |---|---|---|
 | Whether the topic runs | Orchestrator, from the description and instruction | No |
 | SourceArticle | Orchestrator extracts it from the answer text | No (extraction, not judgement) |
 | ConversationId | Platform | Yes |
-| HandledBy, Outcome | Fixed in the node | Yes |
+| HandledBy, Outcome | Fixed in each node; the branch taken decides the Outcome | Yes |
 
 The article is written once, at answer time; later outcome updates leave it unset so the flow keeps the stored value.
 
 **Verified (test pane, 07 Oct 2026):** `How do I set up MFA on a new phone?` → Triage logs Knowledge → `ag_Knowledge` answers from KB-002 → Knowledge Feedback (SourceArticle = KB-002) → row: Handled By = Knowledge, Outcome = Answered, Source Article = KB-002. Negative case: `I cant connect to VPN` → classified Ticket; the topic did not run.
+
+**Verified (test pane, 16 Oct 2026):** `How do I connect to the company Wi-Fi on my phone?` → answer from KB-006 → Knowledge Feedback (SourceArticle = KB-006) → "Did this solve your problem?" → **Yes** → row: Handled By = Knowledge, Outcome = Resolved (self-service), Source Article = KB-006. With the question as the closing message, the parent's separate "request logged" confirmation no longer appeared.

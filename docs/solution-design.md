@@ -7,7 +7,7 @@
 | **Author** | Syed Ezam Zaidi |
 | **Platform** | Microsoft Copilot Studio, Power Automate, Dataverse, SharePoint, Microsoft Entra ID, ServiceNow |
 | **Environment** | Portfolio-Dev (developer environment), solution *AgentOps Helpdesk*, publisher `ezm` |
-| **Status** | Triage, logging, Knowledge and outcome recording built and tested; ServiceNow, Remediation, ops console and deployment pipeline to be built |
+| **Status** | Triage, logging, Knowledge with Yes/No feedback built and tested; ServiceNow, Remediation, ops console and deployment pipeline to be built |
 
 Related documents: [Design decisions](decisions.md) · [Data model](data-model.md) · [Flows](flows.md) · [Platform notes](platform-notes.md) · [Triage instructions](../agent/triage-instructions.md) · [Topics](../agent/topics.md) · [Knowledge agent](../agent/knowledge-agent.md)
 
@@ -130,7 +130,7 @@ The design makes this calculation **measurable rather than estimated**: every in
 |---|---|---|---|
 | AgentOps Helpdesk (Standard) | Copilot Studio agent, generative orchestration, GPT-5 Chat | Triage: classifies, logs, hands off | Built |
 | ag_Knowledge | Child agent | Answers from the SharePoint knowledge base with citations | Built |
-| Knowledge Feedback | Topic on the parent agent | Records the Knowledge outcome; Yes/No closing question | Built (outcome recording); Yes/No to build |
+| Knowledge Feedback | Topic on the parent agent | Records the Knowledge outcome; Yes/No closing question | Built |
 | Escalate | System topic, scoped description | Only for explicit requests to talk to a person | Built |
 | ServiceNow agent | Child agent | Tickets, status checks, escalations, interactions | To build |
 | Remediation agent | Connected agent with its own credentials | Maps requests to catalog fixes; execution runs in flows | To build |
@@ -207,7 +207,7 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 ### 6.3 Knowledge Feedback (topic)
 - Runs after ag_Knowledge answers. Receives the cited article as an input extracted from the answer (the only AI-filled value in the topic).
 - Records Knowledge / Answered and the article at once, so the outcome is attributed even if the employee leaves without answering the question.
-- To build: asks "Did this solve your problem?" with Yes/No buttons; Yes records Resolved (self-service), No records Not found and raises a ticket. Details: [topics.md](../agent/topics.md).
+- Asks "Did this solve your problem?" with Yes/No buttons; Yes records Resolved (self-service), No records Not found (and will raise a ticket once the ServiceNow agent exists). Details: [topics.md](../agent/topics.md).
 
 ### 6.4 ServiceNow (child agent, to build)
 - Creates incidents and interactions, looks up the caller's incidents, raises high-priority escalations. Records its outcome through `wf_Common_UpdateDecision`.
@@ -372,7 +372,7 @@ To move evaluation from exported CSVs into the platform:
 | Routing evaluation | 20 single-turn cases, 3 to 5 per category | **20 / 20** categories correct ([baseline](../eval/results/2026-10-03-triage-baseline.md), [regression](../eval/results/2026-10-04-triage-standard-20case.md)) |
 | Reply policy | No internal labels, JSON, tool names or timeline promises | 5 / 5 after fixes |
 | Knowledge evaluation | 6 covered questions + 2 out-of-scope ([test set](../eval/knowledge-test-set.csv)); grounded answer, correct citation, no answer outside the KB | To run |
-| End-to-end | Teams conversation to the completed Agent Decision row, per category | Knowledge path verified |
+| End-to-end | Teams conversation to the completed Agent Decision row, per category | Knowledge path verified, including Yes feedback |
 
 Evaluation runs are executed in batches of five to stay under the orchestration rate limit (`GenAIToolPlannerRateLimitReached`).
 
@@ -415,7 +415,8 @@ Evaluation runs are executed in batches of five to stay under the orchestration 
 | 3 | Logging flow attached to Triage | Done |
 | 4 | Knowledge agent with SharePoint | Done |
 | 5 | Shared outcome flow and Knowledge Feedback (outcome recording) | Done |
-| 6 | Yes/No closing question; Knowledge evaluation | Next |
+| 6 | Yes/No closing question | Done |
+| 6a | Knowledge evaluation | Next |
 | 7 | ServiceNow agent: incidents, interactions, status, escalation | To do |
 | 8 | Remediation agent: rules, approval and execution flows | To do |
 | 9 | IT Ops console (model-driven app) | To do |
