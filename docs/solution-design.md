@@ -132,7 +132,7 @@ The design makes this calculation **measurable rather than estimated**: every in
 | ag_Knowledge | Child agent | Answers from the SharePoint knowledge base with citations | Built |
 | Knowledge Feedback | Topic on the parent agent | Records the Knowledge outcome; Yes/No closing question | Built |
 | Escalate | System topic, scoped description | Only for explicit requests to talk to a person | Built |
-| ServiceNow agent | Child agent | Tickets, status checks, escalations, interactions | To build |
+| Raise Ticket, Raise Urgent Incident, Check Ticket Status | Topics on the parent agent (D28) | Tickets, escalations, status checks in ServiceNow | To build |
 | Remediation agent | Connected agent with its own credentials | Maps requests to catalog fixes; execution runs in flows | To build |
 | wf_Triage_LogRoutingDecision | Agent flow | Creates the Agent Decision row | Built |
 | wf_Common_UpdateDecision | Agent flow | Updates the same row with handler, outcome, article, incident | Built |
@@ -162,9 +162,9 @@ Source: [solution-flow.drawio](diagrams/solution-flow.drawio) (open in draw.io) 
 | Category | Path | Handled By | Outcome values |
 |---|---|---|---|
 | **Knowledge** | ag_Knowledge answers from the knowledge base and cites the article → Knowledge Feedback records the outcome → "Did this solve your problem?" | Knowledge | Answered → Resolved (self-service) or Not found. *Not found* raises a normal-priority ticket. |
-| **Ticket** | ServiceNow agent confirms the details, creates an incident linked to the interaction, returns the number | ServiceNow | Ticket Created (+ Incident Number) |
-| **Status Check** | ServiceNow agent looks up the caller's incidents and summarises their status | ServiceNow | Answered |
-| **Escalate** | ServiceNow agent creates a P1/P2 incident for the security or major-incident group and notifies it immediately; security incidents also get "change your password now" advice | ServiceNow | Escalated (+ Incident Number) |
+| **Ticket** | *Raise Ticket* topic confirms the details, creates an incident linked to the interaction, returns the number | ServiceNow | Ticket Created (+ Incident Number) |
+| **Status Check** | *Check Ticket Status* topic looks up the caller's incidents and summarises their status | ServiceNow | Answered |
+| **Escalate** | *Raise Urgent Incident* topic creates a P1/P2 incident for the security or major-incident group and notifies it immediately; security incidents also get "change your password now" advice | ServiceNow | Escalated (+ Incident Number) |
 | **Remediation** | Remediation agent maps the request to a catalog fix and creates a Remediation Request and a tracking incident → eligibility rules → manager approval if required → execution by API or desktop flow → incident resolved or escalated | Remediation | Remediated or Failed (+ Incident Number) |
 
 A request abandoned before hand-off keeps Handled By = Triage with no outcome, which is itself a measurable drop-off.
@@ -209,8 +209,12 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 - Records Knowledge / Answered and the article at once, so the outcome is attributed even if the employee leaves without answering the question.
 - Asks "Did this solve your problem?" with Yes/No buttons; Yes records Resolved (self-service), No records Not found (and will raise a ticket once the ServiceNow agent exists). Details: [topics.md](../agent/topics.md).
 
-### 6.4 ServiceNow (child agent, to build)
-- Creates incidents and interactions, looks up the caller's incidents, raises high-priority escalations. Records its outcome through `wf_Common_UpdateDecision`.
+### 6.4 ServiceNow topics (to build)
+- Three topics on the parent agent instead of a child agent, so priority, handler and outcome are fixed per path (D28):
+  - **Raise Ticket**: AI-written summary → `wf_ServiceNow_CreateIncident` (normal priority) → `wf_Common_UpdateDecision` (ServiceNow / Ticket Created / incident number). Also reached by redirect from Knowledge Feedback's No branch.
+  - **Raise Urgent Incident**: the same with high priority and the security or major-incident group (ServiceNow / Escalated).
+  - **Check Ticket Status**: `wf_ServiceNow_GetMyIncidents` filtered by the signed-in email → AI summarises → ServiceNow / Answered.
+- Flows connect as a ServiceNow integration user with the `itil` role and web-service-only access.
 
 ### 6.5 Remediation (connected agent, to build)
 - A separate agent with its own credentials, evaluation and release cycle (D21). Triage can request a fix but never holds the permissions to make one.
@@ -224,7 +228,8 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 |---|---|---|---|---|
 | `wf_Triage_LogRoutingDecision` | When an agent calls the flow | Triage (tool, maker credentials) | Embedded Dataverse connection | Built, evaluated |
 | `wf_Common_UpdateDecision` | When an agent calls the flow | Knowledge Feedback topic; later ServiceNow and Remediation | Embedded Dataverse connection | Built, unit and integration tested |
-| ServiceNow incident / interaction / status flows | When an agent calls the flow | ServiceNow agent | ServiceNow connection (service account) | To build |
+| `wf_ServiceNow_CreateIncident`, `wf_ServiceNow_GetMyIncidents` | When an agent calls the flow | ServiceNow topics | ServiceNow connection (integration user, `itil`) | To build |
+| `wf_ServiceNow_UpdateIncident` | Child flow | Remediation orchestration (resolve or escalate) | ServiceNow connection (integration user) | To build with Remediation |
 | Remediation eligibility and orchestration | Dataverse: Remediation Request created | Platform | Service account | To build |
 | Manager approval | Within the orchestration flow | Platform | Approvals | To build |
 | Enable VPN access | Child flow | Orchestration flow | Entra ID / Graph, scoped service account | To build |
@@ -417,7 +422,7 @@ Evaluation runs are executed in batches of five to stay under the orchestration 
 | 5 | Shared outcome flow and Knowledge Feedback (outcome recording) | Done |
 | 6 | Yes/No closing question | Done |
 | 6a | Knowledge evaluation | Next |
-| 7 | ServiceNow agent: incidents, interactions, status, escalation | To do |
+| 7 | ServiceNow topics and flows: tickets, escalation, status (interactions after) | To do |
 | 8 | Remediation agent: rules, approval and execution flows | To do |
 | 9 | IT Ops console (model-driven app) | To do |
 | 10 | Publish to Teams, Dev to Test deployment, end-to-end evaluation | To do |

@@ -112,3 +112,9 @@ Short record of the choices made, why, and what was rejected.
 ### D27: Interactions for every request, incidents only for work
 **Decision:** In ServiceNow, every request creates an Interaction, closed automatically when the agent resolves it; an Incident is created only for Ticket and Escalate requests and linked to the interaction. Agent performance KPIs are computed from Agent Decision in Dataverse.
 **Why:** IT sees total contact volume and deflection in its own system without inflating incident counts or distorting resolution-time and SLA metrics with self-resolved questions. Dataverse holds the AI-specific data (category, routing reason, cited article, evaluation linkage) that ServiceNow does not.
+
+### D28: ServiceNow paths as topics, not a child agent
+**Decision:** Ticket, Escalate and Status Check are handled by three topics on the parent agent (*Raise Ticket*, *Raise Urgent Incident*, *Check Ticket Status*) instead of a ServiceNow child agent. Each topic calls a ServiceNow flow and then `wf_Common_UpdateDecision`. Knowledge Feedback's No branch redirects to *Raise Ticket* directly. Supersedes the ServiceNow part of D21.
+**Why:** Priority, outcome and handler must be fixed per path, never chosen by a model; topics hard-code them per branch, as Knowledge Feedback does. The AI still writes the ticket summary and explains the status. A redirect gives the "didn't help" path a deterministic hand-off.
+**Scope:** create and read incidents only. Updating incidents arrives with Remediation (resolve or escalate after a fix, system-driven). Employee updates are limited to adding a comment to their own incident, with ownership checked in the flow, if added at all. Interactions (D27) follow incidents.
+**Identity:** flows connect as a dedicated ServiceNow integration user with the `itil` role and web-service-only access; the incident caller is matched by the employee's email from the sign-in.
