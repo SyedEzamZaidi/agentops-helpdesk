@@ -207,7 +207,7 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 ### 6.3 Knowledge Feedback (topic)
 - Runs after ag_Knowledge answers. Receives the cited article as an input extracted from the answer (the only AI-filled value in the topic).
 - Records Knowledge / Answered and the article at once, so the outcome is attributed even if the employee leaves without answering the question.
-- Asks "Did this solve your problem?" with Yes/No buttons; Yes records Resolved (self-service), No records Not found (and will raise a ticket once the ServiceNow agent exists). Details: [topics.md](../agent/topics.md).
+- Asks "Did this solve your problem?" with Yes/No buttons; Yes records Resolved (self-service), No records Not found and redirects to the Raise Ticket topic once it exists. Details: [topics.md](../agent/topics.md).
 
 ### 6.4 ServiceNow topics (to build)
 - Three topics on the parent agent instead of a child agent, so priority, handler and outcome are fixed per path (D28):
