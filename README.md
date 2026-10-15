@@ -52,7 +52,7 @@ Built top-down, following the path a request takes.
 | 2 | Triage agent (classification) | Done |
 | 3 | Log Routing Decision flow, attached to Triage | Done |
 | 4 | ServiceNow agent and Create Incident flow | |
-| 5 | Remediation agent, rules, approval and execution flows | |
+| 5 | Remediation agent, rules, approval and execution flows | In progress |
 | 6 | Knowledge agent with SharePoint | Done |
 | 7 | IT Ops console (model-driven app) | |
 | 8 | Publish to Teams, evaluation, demo | |
@@ -68,3 +68,4 @@ Built top-down, following the path a request takes.
 | 04 Oct 2026 | Knowledge child agent answering from a SharePoint KB (8 articles), handed off from Triage after logging |
 | 07 Oct 2026 | Knowledge requests closed on the same Agent Decision row: Knowledge Feedback topic calls `wf_Common_UpdateDecision` (Handled By = Knowledge, Outcome = Answered, cited article) |
 | 16 Oct 2026 | Solution design document; Knowledge Feedback closes with "Did this solve your problem?" and records Resolved (self-service) or Not found on the request's row |
+| 16 Oct 2026 | Remediation intake: `wf_Remediation_SubmitRequest` records a Remediation Request against the catalog allow-list and the request's decision row (unit tested); D28 ServiceNow paths as topics, D29 remediation intake as a topic with execution in a triggered flow |

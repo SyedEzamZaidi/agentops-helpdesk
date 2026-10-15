@@ -7,7 +7,7 @@
 | **Author** | Syed Ezam Zaidi |
 | **Platform** | Microsoft Copilot Studio, Power Automate, Dataverse, SharePoint, Microsoft Entra ID, ServiceNow |
 | **Environment** | Portfolio-Dev (developer environment), solution *AgentOps Helpdesk*, publisher `ezm` |
-| **Status** | Triage, logging, Knowledge with Yes/No feedback built and tested; ServiceNow, Remediation, ops console and deployment pipeline to be built |
+| **Status** | Triage, logging, Knowledge with Yes/No feedback built and tested; Remediation submit flow built; ServiceNow (instance under maintenance), remaining Remediation, ops console and deployment pipeline to be built |
 
 Related documents: [Design decisions](decisions.md) · [Data model](data-model.md) · [Flows](flows.md) · [Platform notes](platform-notes.md) · [Triage instructions](../agent/triage-instructions.md) · [Topics](../agent/topics.md) · [Knowledge agent](../agent/knowledge-agent.md)
 
@@ -133,7 +133,8 @@ The design makes this calculation **measurable rather than estimated**: every in
 | Knowledge Feedback | Topic on the parent agent | Records the Knowledge outcome; Yes/No closing question | Built |
 | Escalate | System topic, scoped description | Only for explicit requests to talk to a person | Built |
 | Raise Ticket, Raise Urgent Incident, Check Ticket Status | Topics on the parent agent (D28) | Tickets, escalations, status checks in ServiceNow | To build |
-| Remediation agent | Connected agent with its own credentials | Maps requests to catalog fixes; execution runs in flows | To build |
+| Request Account Fix | Topic on the parent agent (D29) | Maps the request to a catalog fix and submits it | To build |
+| wf_Remediation_SubmitRequest | Agent flow | Records the Remediation Request (Pending Approval) and marks the decision row | Built, unit tested |
 | wf_Triage_LogRoutingDecision | Agent flow | Creates the Agent Decision row | Built |
 | wf_Common_UpdateDecision | Agent flow | Updates the same row with handler, outcome, article, incident | Built |
 | Remediation flows | Dataverse-triggered cloud flow, approval, cloud flow (Graph), desktop flows | Eligibility, approval, execution | To build |
@@ -216,9 +217,10 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
   - **Check Ticket Status**: `wf_ServiceNow_GetMyIncidents` filtered by the signed-in email → AI summarises → ServiceNow / Answered.
 - Flows connect as a ServiceNow integration user with the `itil` role and web-service-only access.
 
-### 6.5 Remediation (connected agent, to build)
-- A separate agent with its own credentials, evaluation and release cycle (D21). Triage can request a fix but never holds the permissions to make one.
-- Asynchronous: the agent creates the Remediation Request; a Dataverse-triggered flow applies the rules, runs the approval and executes (D22).
+### 6.5 Remediation (intake topic plus triggered flow)
+- **Request Account Fix** topic: the AI picks the fix from the three catalog codes and the target account from the message; requester and conversation come from the platform. It calls `wf_Remediation_SubmitRequest`, which records a Remediation Request (Pending Approval) and returns its number (D29).
+- The agent can only submit a request. A Dataverse-triggered flow applies the eligibility rules, runs the manager approval and executes the fix on its own connection, so the permission to change an account never sits with the agent (D22, D29).
+- v1 executes Enable VPN access through Entra ID; unlock and MFA reset stay in the catalog for the desktop-flow path.
 
 ---
 
@@ -230,6 +232,7 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 | `wf_Common_UpdateDecision` | When an agent calls the flow | Knowledge Feedback topic; later ServiceNow and Remediation | Embedded Dataverse connection | Built, unit and integration tested |
 | `wf_ServiceNow_CreateIncident`, `wf_ServiceNow_GetMyIncidents` | When an agent calls the flow | ServiceNow topics | ServiceNow connection (integration user, `itil`) | To build |
 | `wf_ServiceNow_UpdateIncident` | Child flow | Remediation orchestration (resolve or escalate) | ServiceNow connection (integration user) | To build with Remediation |
+| `wf_Remediation_SubmitRequest` | When an agent calls the flow | Request Account Fix topic | Embedded Dataverse connection | Built, unit tested |
 | Remediation eligibility and orchestration | Dataverse: Remediation Request created | Platform | Service account | To build |
 | Manager approval | Within the orchestration flow | Platform | Approvals | To build |
 | Enable VPN access | Child flow | Orchestration flow | Entra ID / Graph, scoped service account | To build |
@@ -423,7 +426,7 @@ Evaluation runs are executed in batches of five to stay under the orchestration 
 | 6 | Yes/No closing question | Done |
 | 6a | Knowledge evaluation | Next |
 | 7 | ServiceNow topics and flows: tickets, escalation, status (interactions after) | To do |
-| 8 | Remediation agent: rules, approval and execution flows | To do |
+| 8 | Remediation: submit flow (done), intake topic, rules, approval and execution flow | In progress |
 | 9 | IT Ops console (model-driven app) | To do |
 | 10 | Publish to Teams, Dev to Test deployment, end-to-end evaluation | To do |
 

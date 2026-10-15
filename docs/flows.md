@@ -102,3 +102,33 @@ Inputs: an existing conversation, HandledBy = ServiceNow, Outcome = Ticket Creat
 **Diagnosis:** the trigger received exactly `Knowledge`, so the caller was cleared. Every case in the HandledBy Switch was skipped: the case value was `Knowledge ` (trailing space), and Switch matching is exact. `HandledByValue` kept its initial 0. The Default branch did not stop the run, so the 0 reached Dataverse and surfaced as a Dataverse validation error instead of the flow's own `InvalidHandledBy`.
 **Fix:** trailing space removed; all eleven case values checked in Peek code; Terminate (Failed) in both Default branches.
 **Lesson:** the unit test exercised one of the four HandledBy paths. Each case of a mapping Switch needs a test, and a guard branch is only real once a test has hit it.
+
+## wf_Remediation_SubmitRequest
+
+Agent flow called by the *Request Account Fix* topic. Records the request; it never changes an account (D29). Built in the classic designer inside the solution; no expressions.
+
+### Inputs
+
+| Input | Type | Filled by | Notes |
+|---|---|---|---|
+| ActionCode | Text, fixed list: UNLOCK_ACCOUNT, RESET_MFA, ENABLE_VPN_ACCESS | AI (constrained) | Which catalog fix |
+| TargetUserEmail | Text | AI | Whose account the fix is for |
+| RequesterEmail | Text | `System.User.Email` | Signed-in user |
+| ConversationId | Text | `System.Conversation.Id` | Finds the request's Agent Decision row |
+
+### Steps
+
+1. **Initialize variables** `ActionCodeValue` (Integer), `RequestNumber` (String).
+2. **Switch for Action Code** on the input: UNLOCK_ACCOUNT → 791760000, RESET_MFA → 791760001, ENABLE_VPN_ACCESS → 791760002. Default: Terminate (Failed, `InvalidActionCode`).
+3. **Find Catalog Fix**: List rows, Remediation Catalog, `ezm_actioncode eq <ActionCodeValue> and ezm_active eq true`, 1 row. An inactive fix returns nothing, so no request is created (allow-list, D5).
+4. **Find Latest Decision**: List rows, Agent Decisions, `ezm_conversationid eq '<ConversationId>'`, `createdon desc`, 1 row.
+5. **For Catalog → For Decision Row** (nested, one row each):
+   - **Create Remediation Request**: Fix = `ezm_remediationcatalogs(<catalog id>)`, Agent Decision = `ezm_agentdecisions(<decision id>)`, Requester Email, Target User Email, Request Status = Pending Approval.
+   - **Remember Request Number**: `RequestNumber` = the new row's Request Number.
+   - **Mark Handled By Remediation**: update the Agent Decision row, Handled By = Remediation.
+6. **Respond to the agent** → `RequestNumber` (empty when the fix is inactive or no decision row exists; the topic treats empty as "could not submit").
+
+The loops are nested because the request row needs both IDs at once; each List rows returns a list even for one row.
+
+### Unit test (16 Oct 2026)
+Inputs: ENABLE_VPN_ACCESS, requester = target = the test user, an existing conversation ID. Result: Remediation Request created (Fix = Enable VPN access, linked to the Agent Decision row, Pending Approval); the decision row's Handled By changed to Remediation; other decision fields unchanged.
