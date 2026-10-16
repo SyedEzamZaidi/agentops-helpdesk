@@ -55,3 +55,28 @@ The article is written once, at answer time; later outcome updates leave it unse
 **Verified (test pane, 07 Oct 2026):** `How do I set up MFA on a new phone?` → Triage logs Knowledge → `ag_Knowledge` answers from KB-002 → Knowledge Feedback (SourceArticle = KB-002) → row: Handled By = Knowledge, Outcome = Answered, Source Article = KB-002. Negative case: `I cant connect to VPN` → classified Ticket; the topic did not run.
 
 **Verified (test pane, 16 Oct 2026):** `How do I connect to the company Wi-Fi on my phone?` → answer from KB-006 → Knowledge Feedback (SourceArticle = KB-006) → "Did this solve your problem?" → **Yes** → row: Handled By = Knowledge, Outcome = Resolved (self-service), Source Article = KB-006. `How do I set up Microsoft Teams on my laptop?` → **No** → Outcome = Not found, Source Article kept. With the question as the closing message, the parent's separate "request logged" confirmation no longer appeared.
+
+## Request Account Fix (custom topic)
+
+Remediation intake (D29). Submits a Remediation Request; it never changes an account.
+
+**Trigger:** The agent chooses. Referenced from the parent instructions ("If the category is Remediation, after logging run the Request Account Fix topic").
+
+**Description:**
+```text
+Use after the request has been classified as Remediation and logged, when the employee asks to unlock an account, reset MFA or get VPN access. Do not use for how-to questions, problems that need investigation or anything else.
+```
+
+**Inputs** (orchestrator-filled, never prompted):
+| Input | Description |
+|---|---|
+| `ActionCode` | Exactly one of: UNLOCK_ACCOUNT, RESET_MFA, ENABLE_VPN_ACCESS, matching what the user asked for. |
+| `TargetUserEmail` | Email of another person whose account the fix is for, only if the user names someone else. Leave empty when the request is about the user's own account. |
+
+**Nodes:**
+1. Condition `TargetUserEmail` is blank → Set `TargetUserEmail` = `System.User.Email`. The model never guesses the user's own address; a named other person is kept and rejected later by the self-service rule.
+2. Action → `wf_Remediation_SubmitRequest`: ActionCode and TargetUserEmail from the topic, RequesterEmail = `System.User.Email`, ConversationId = `System.Conversation.Id`; output `RequestNumber`.
+3. Condition `RequestNumber` is not blank → "I've submitted your request {RequestNumber}. It will be checked against the access rules and, if needed, sent to your manager for approval. You'll get a Teams message with the result." Otherwise → "I couldn't submit that request. Please contact the IT service desk."
+4. End current topic.
+
+**Verified (test pane, 16 Oct 2026):** `I need VPN access on my laptop` → Triage logs Remediation → Request Account Fix → REM-00002 submitted (Pending Approval, Enable VPN access, requester = target).

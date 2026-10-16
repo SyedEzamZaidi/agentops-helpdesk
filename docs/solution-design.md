@@ -133,7 +133,7 @@ The design makes this calculation **measurable rather than estimated**: every in
 | Knowledge Feedback | Topic on the parent agent | Records the Knowledge outcome; Yes/No closing question | Built |
 | Escalate | System topic, scoped description | Only for explicit requests to talk to a person | Built |
 | Raise Ticket, Raise Urgent Incident, Check Ticket Status | Topics on the parent agent (D28) | Tickets, escalations, status checks in ServiceNow | To build |
-| Request Account Fix | Topic on the parent agent (D29) | Maps the request to a catalog fix and submits it | To build |
+| Request Account Fix | Topic on the parent agent (D29) | Maps the request to a catalog fix and submits it | Built |
 | wf_Remediation_SubmitRequest | Agent flow | Records the Remediation Request (Pending Approval) and marks the decision row | Built, unit tested |
 | wf_Triage_LogRoutingDecision | Agent flow | Creates the Agent Decision row | Built |
 | wf_Common_UpdateDecision | Agent flow | Updates the same row with handler, outcome, article, incident | Built |
