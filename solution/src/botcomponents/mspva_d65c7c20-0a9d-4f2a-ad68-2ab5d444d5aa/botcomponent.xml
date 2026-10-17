@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_d65c7c20-0a9d-4f2a-ad68-2ab5d444d5aa">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>My colleague can’t access her account, can you assist?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>My colleague can’t access her account, can you assist?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_1caa7046-a350-4d77-bbf5-88c3c3b9113e</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

@@ -1,0 +1,24 @@
+kind: TaskDialog
+inputs:
+  - kind: ManualTaskInput
+    propertyName: text_4
+    value: =System.User.Email
+
+  - kind: ManualTaskInput
+    propertyName: text_1
+    value: =System.Conversation.Id
+
+modelDisplayName: wf_Triage_LogRoutingDecision_v2
+modelDescription: Logs the routing decision for an employee's IT request. Call exactly once per request, immediately after classifying it. Do not call for greetings or small talk.
+outputs:
+  - propertyName: text
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 3d231ffa-3757-7d69-914a-3e0bdf4b9944
+  connectionProperties:
+    $kind: ConnectionProperties
+    diagnostics:
+    mode: Maker
+
+outputMode: All

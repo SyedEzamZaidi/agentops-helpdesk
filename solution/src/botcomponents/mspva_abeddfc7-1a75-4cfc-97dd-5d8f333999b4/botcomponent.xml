@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_abeddfc7-1a75-4cfc-97dd-5d8f333999b4">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>my laptop has been freezing every morning</description>
+  <iscustomizable>0</iscustomizable>
+  <name>my laptop has been freezing every morning</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

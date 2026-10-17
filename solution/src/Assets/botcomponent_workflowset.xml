@@ -1,0 +1,14 @@
+<botcomponent_workflowset>
+  <botcomponent_workflow botcomponentid.schemaname="ezm_HelpdeskAgent.action.wf_Common_UpdateDecision" workflowid.workflowid="94576766-d9c1-f111-aaaf-70a8a56814ed">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision" workflowid.workflowid="3d231ffa-3757-7d69-914a-3e0bdf4b9944">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="ezm_HelpdeskAgent.topic.KnowledgeFeedback" workflowid.workflowid="94576766-d9c1-f111-aaaf-70a8a56814ed">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+  <botcomponent_workflow botcomponentid.schemaname="ezm_HelpdeskAgent.topic.Untitled" workflowid.workflowid="868e43cb-d5c8-f111-a05c-70a8a56814ed">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_workflow>
+</botcomponent_workflowset>

@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_4b6d2124-3875-4fab-866b-380821e3a8e9">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>what's the status of INC0010023?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>what's the status of INC0010023?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

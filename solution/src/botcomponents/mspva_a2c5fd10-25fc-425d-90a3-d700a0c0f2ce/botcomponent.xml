@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_a2c5fd10-25fc-425d-90a3-d700a0c0f2ce">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>please unlock Mark's account he's stuck</description>
+  <iscustomizable>0</iscustomizable>
+  <name>please unlock Mark's account he's stuck</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

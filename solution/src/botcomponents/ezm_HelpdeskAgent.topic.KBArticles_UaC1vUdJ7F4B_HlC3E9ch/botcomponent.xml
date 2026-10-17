@@ -1,0 +1,14 @@
+<botcomponent schemaname="ezm_HelpdeskAgent.topic.KBArticles_UaC1vUdJ7F4B_HlC3E9ch">
+  <componenttype>16</componenttype>
+  <description>This knowledge source provides information found in KB Articles SharePoint.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>KB Articles</name>
+  <parentbotcomponentid>
+    <schemaname>ezm_HelpdeskAgent.agent.Agent</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

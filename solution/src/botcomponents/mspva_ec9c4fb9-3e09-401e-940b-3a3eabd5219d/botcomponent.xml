@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_ec9c4fb9-3e09-401e-940b-3a3eabd5219d">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>any update on my ticket from yesterday?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>any update on my ticket from yesterday?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

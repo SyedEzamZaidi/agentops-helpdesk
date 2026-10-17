@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_95b0f5fd-cce4-4599-9bb1-34b84a56217d">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>my second monitor stopped working after the update</description>
+  <iscustomizable>0</iscustomizable>
+  <name>my second monitor stopped working after the update</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

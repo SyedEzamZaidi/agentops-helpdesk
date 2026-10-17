@@ -1,0 +1,11 @@
+<botcomponent schemaname="ezm_HelpdeskAgent.topic.KnowledgeFeedback">
+  <componenttype>9</componenttype>
+  <description>Records the Knowledge outcome and, later, asks for Yes/No feedback.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>Knowledge Feedback</name>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Remediation
+    input: I need VPN access to work from home next week
+
+extensionData:
+  displayOrder: "1791117639576"

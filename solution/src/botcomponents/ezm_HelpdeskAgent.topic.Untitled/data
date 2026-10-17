@@ -1,0 +1,75 @@
+kind: AdaptiveDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: ActionCode
+    description: "Exactly one of: UNLOCK_ACCOUNT, RESET_MFA, ENABLE_VPN_ACCESS, matching what the user asked for."
+    shouldPromptUser: false
+
+  - kind: AutomaticTaskInput
+    propertyName: TargetUserEmail
+    description: Email of another person whose account the fix is for, only if the user names someone else. Leave empty when the request is about the user's own account.
+    shouldPromptUser: false
+
+modelDescription: Use after the request has been classified as Remediation and logged, when the employee asks to unlock an account, reset MFA or get VPN access. Do not use for how-to questions, problems that need investigation or anything else.
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent: {}
+  actions:
+    - kind: ConditionGroup
+      id: conditionGroup_P4e5gR
+      conditions:
+        - id: conditionItem_H1Ahvc
+          condition: =IsBlank(Topic.TargetUserEmail)
+          actions:
+            - kind: SetVariable
+              id: setVariable_4ajmfb
+              variable: Topic.TargetUserEmail
+              value: =System.User.Email
+
+    - kind: InvokeFlowAction
+      id: invokeFlowAction_U19eVR
+      input:
+        binding:
+          text: =Topic.ActionCode
+          text_1: =Topic.TargetUserEmail
+          text_2: =System.User.Email
+          text_3: =System.Conversation.Id
+
+      output:
+        binding:
+          requestnumber: Topic.RequestNumber
+
+      flowId: 868e43cb-d5c8-f111-a05c-70a8a56814ed
+
+    - kind: ConditionGroup
+      id: conditionGroup_13QIWo
+      conditions:
+        - id: conditionItem_TBT4i5
+          condition: =!IsBlank(Topic.RequestNumber)
+          actions:
+            - kind: SendActivity
+              id: sendActivity_7LtFTV
+              activity: I've submitted your request {Topic.RequestNumber}. It will be checked against the access rules and, if needed, sent to your manager for approval. You'll get a Teams message with the result.
+
+      elseActions:
+        - kind: SendActivity
+          id: sendActivity_bsWNxq
+          activity: I couldn't submit that request. Please contact the IT service desk.
+
+    - kind: EndDialog
+      id: 3PmxEb
+
+inputType:
+  properties:
+    ActionCode:
+      displayName: ActionCode
+      description: "Exactly one of: UNLOCK_ACCOUNT, RESET_MFA, ENABLE_VPN_ACCESS, matching what the user asked for."
+      type: String
+
+    TargetUserEmail:
+      displayName: TargetUserEmail
+      description: Email of another person whose account the fix is for, only if the user names someone else. Leave empty when the request is about the user's own account.
+      type: String
+
+outputType: {}

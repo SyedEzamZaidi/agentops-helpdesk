@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_2a158a93-6979-4fd5-9107-9b995892e99b">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I need my VPN access enabled.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I need my VPN access enabled.</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_1caa7046-a350-4d77-bbf5-88c3c3b9113e</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

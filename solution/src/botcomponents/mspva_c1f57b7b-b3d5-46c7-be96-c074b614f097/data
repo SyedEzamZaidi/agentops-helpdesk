@@ -1,0 +1,12 @@
+kind: EvaluationData
+rows:
+  - source: Edited
+    expectedOutput: Escalate
+    expectedExecutionSteps:
+      - kind: ExpectedToolCallStep
+        schemaName: ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision
+
+    input: I clicked a link in a suspicious email and entered my password
+
+extensionData:
+  displayOrder: "1791121360587"

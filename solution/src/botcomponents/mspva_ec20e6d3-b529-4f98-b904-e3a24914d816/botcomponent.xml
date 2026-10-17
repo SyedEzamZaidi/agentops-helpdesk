@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_ec20e6d3-b529-4f98-b904-e3a24914d816">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I clicked a link in a suspicious email and entered my password</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I clicked a link in a suspicious email and entered my password</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

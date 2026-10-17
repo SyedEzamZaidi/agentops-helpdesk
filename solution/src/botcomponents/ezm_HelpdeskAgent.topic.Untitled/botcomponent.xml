@@ -1,0 +1,10 @@
+<botcomponent schemaname="ezm_HelpdeskAgent.topic.Untitled">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Request Account Fix</name>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

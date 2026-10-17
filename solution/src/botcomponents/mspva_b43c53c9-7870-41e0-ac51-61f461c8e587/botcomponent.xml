@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_b43c53c9-7870-41e0-ac51-61f461c8e587">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>outlook keeps crashing when I open attachments</description>
+  <iscustomizable>0</iscustomizable>
+  <name>outlook keeps crashing when I open attachments</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

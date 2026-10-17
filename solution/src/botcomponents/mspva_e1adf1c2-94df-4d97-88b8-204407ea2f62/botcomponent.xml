@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_e1adf1c2-94df-4d97-88b8-204407ea2f62">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I need VPN access to work from home next week</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I need VPN access to work from home next week</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

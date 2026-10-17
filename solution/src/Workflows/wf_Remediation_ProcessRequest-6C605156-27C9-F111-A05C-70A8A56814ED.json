@@ -1,0 +1,603 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_7784ebd9"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_office365users": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ezm_sharedoffice365users_70f06"
+        },
+        "api": {
+          "name": "shared_office365users"
+        }
+      },
+      "shared_approvals": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ezm_sharedapprovals_a75c7"
+        },
+        "api": {
+          "name": "shared_approvals"
+        }
+      },
+      "shared_azuread": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ezm_sharedazuread_47537"
+        },
+        "api": {
+          "name": "shared_azuread"
+        }
+      },
+      "shared_teams": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ezm_sharedteams_445b7"
+        },
+        "api": {
+          "name": "shared_teams"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_a_row_is_added,_modified_or_deleted": {
+          "metadata": {
+            "operationMetadataId": "1a89210d-bc26-414a-aaa3-96f8b380e069"
+          },
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "subscriptionRequest/message": 1,
+              "subscriptionRequest/entityname": "ezm_remediationrequest",
+              "subscriptionRequest/scope": 4
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_Catalog_Fix": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "16f25a6e-dcd3-488d-b11c-b766371556a9"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "ezm_remediationcatalogs",
+              "recordId": "@triggerOutputs()?['body/_ezm_fix_value']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          }
+        },
+        "Initialize_variable_Reject_Reason": {
+          "runAfter": {
+            "Get_Catalog_Fix": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "14a5a811-4326-4e33-b269-462c043e968d"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "RejectReason",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Rule_Self_Service": {
+          "actions": {
+            "Set_variable": {
+              "metadata": {
+                "operationMetadataId": "9c7bd050-e924-4fba-903e-a69901bbf586"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "RejectReason",
+                "value": "This fix can only be requested for your own account."
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_variable_Reject_Reason": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@outputs('Get_Catalog_Fix')?['body/ezm_selfserviceonly']",
+                  "@true"
+                ]
+              },
+              {
+                "not": {
+                  "equals": [
+                    "@triggerOutputs()?['body/ezm_requesteremail']",
+                    "@triggerOutputs()?['body/ezm_targetuseremail']"
+                  ]
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d202a21c-16d1-4e9b-a28a-59eb736f5f82"
+          },
+          "type": "If"
+        },
+        "Get_requester_profile_": {
+          "runAfter": {
+            "Rule_Self_Service": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "bdf4d3c7-f62d-4121-be64-852ce53fe6bc"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "id": "@triggerOutputs()?['body/ezm_requesteremail']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+              "operationId": "UserProfile_V2",
+              "connectionName": "shared_office365users"
+            }
+          }
+        },
+        "Rule_Department": {
+          "actions": {
+            "Set_variable_2": {
+              "metadata": {
+                "operationMetadataId": "92053c99-1ddd-4a8e-9259-7f0073527241"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "RejectReason",
+                "value": "Your department is not eligible for this fix."
+              }
+            }
+          },
+          "runAfter": {
+            "Get_requester_profile_": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "not": {
+                  "equals": [
+                    "@outputs('Get_Catalog_Fix')?['body/ezm_eligibledepartments']",
+                    ""
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "contains": [
+                    "@outputs('Get_Catalog_Fix')?['body/ezm_eligibledepartments']",
+                    "@outputs('Get_requester_profile_')?['body/department']"
+                  ]
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "51e5c1af-c80d-40b4-b1fb-1ba3f83726e5"
+          },
+          "type": "If"
+        },
+        "Passed_Rules": {
+          "actions": {
+            "Needs_Approval": {
+              "actions": {
+                "Get_manager_(V2)": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "id": "@triggerOutputs()?['body/ezm_requesteremail']"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+                      "operationId": "Manager_V2",
+                      "connectionName": "shared_office365users"
+                    }
+                  }
+                },
+                "Manager_Approval": {
+                  "runAfter": {
+                    "Get_manager_(V2)": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnectionWebhook",
+                  "inputs": {
+                    "parameters": {
+                      "approvalType": "Basic",
+                      "WebhookApprovalCreationInput/title": "IT access request @{triggerOutputs()?['body/ezm_requestnumber']}",
+                      "WebhookApprovalCreationInput/assignedTo": "@outputs('Get_manager_(V2)')?['body/mail']",
+                      "WebhookApprovalCreationInput/details": "Requester: @{triggerOutputs()?['body/ezm_requesteremail']} | Fix: @{outputs('Get_Catalog_Fix')?['body/ezm_fixname']}",
+                      "WebhookApprovalCreationInput/enableNotifications": true,
+                      "WebhookApprovalCreationInput/enableReassignment": false
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+                      "operationId": "StartAndWaitForAnApproval",
+                      "connectionName": "shared_approvals"
+                    }
+                  }
+                },
+                "Approved": {
+                  "actions": {},
+                  "runAfter": {
+                    "Manager_Approval": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Updating_Reject_Reason": {
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "RejectReason",
+                          "value": "Your manager did not approve this request."
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@outputs('Manager_Approval')?['body/outcome']",
+                          "Approve"
+                        ]
+                      }
+                    ]
+                  },
+                  "type": "If"
+                }
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@outputs('Get_Catalog_Fix')?['body/ezm_requiresapproval']",
+                      "@true"
+                    ]
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Rule_Department": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "equals": [
+              "@variables('RejectReason')",
+              ""
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8c9b3574-486c-48a4-a9fb-d93c0482ca4a"
+          },
+          "type": "If"
+        },
+        "Ready_to_Run": {
+          "actions": {
+            "Is_VPN_Fix": {
+              "actions": {
+                "Get_Target_Profile": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "id": "@triggerOutputs()?['body/ezm_targetuseremail']"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+                      "operationId": "UserProfile_V2",
+                      "connectionName": "shared_office365users"
+                    }
+                  }
+                },
+                "Add_user_to_VPN_group": {
+                  "runAfter": {
+                    "Get_Target_Profile": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "body/@odata.id": "@outputs('Get_Target_Profile')?['body/id']",
+                      "id": "98d20d8f-229b-42e4-b4c9-239afed2c20e"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_azuread",
+                      "operationId": "AddUserToGroup",
+                      "connectionName": "shared_azuread"
+                    }
+                  }
+                },
+                "Update_a_row_Remediation_Request": {
+                  "runAfter": {
+                    "Add_user_to_VPN_group": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "ezm_remediationrequests",
+                      "recordId": "@triggerOutputs()?['body/ezm_remediationrequestid']",
+                      "item/ezm_requeststatus": 791760004,
+                      "item/ezm_runresult": "Added to VPN-Users"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                },
+                "Update_a_row_Agent_Decision": {
+                  "runAfter": {
+                    "Update_a_row_Remediation_Request": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "ezm_agentdecisions",
+                      "recordId": "@triggerOutputs()?['body/_ezm_agentdecision_value']",
+                      "item/ezm_outcome": 791760002
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                },
+                "Notify_Success": {
+                  "runAfter": {
+                    "Update_a_row_Agent_Decision": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "poster": "Flow bot",
+                      "location": "Chat with Flow bot",
+                      "body/recipient": "@triggerOutputs()?['body/ezm_requesteremail']",
+                      "body/messageBody": "<p class=\"editor-paragraph\">Your Request @{triggerOutputs()?['body/ezm_requestnumber']}is complete: you now have VPN access.</p>"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                      "operationId": "PostMessageToConversation",
+                      "connectionName": "shared_teams"
+                    }
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Update_a_row_Remediation_requests_2": {
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "entityName": "ezm_remediationrequests",
+                        "recordId": "@triggerOutputs()?['body/ezm_remediationrequestid']",
+                        "item/ezm_requeststatus": 791760005
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                        "operationId": "UpdateOnlyRecord",
+                        "connectionName": "shared_commondataserviceforapps"
+                      }
+                    }
+                  },
+                  "Update_a_row_Agent_Decision_2": {
+                    "runAfter": {
+                      "Update_a_row_Remediation_requests_2": [
+                        "Succeeded"
+                      ]
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "entityName": "ezm_agentdecisions",
+                        "recordId": "@triggerOutputs()?['body/_ezm_agentdecision_value']",
+                        "item/ezm_outcome": 791760004
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                        "operationId": "UpdateOnlyRecord",
+                        "connectionName": "shared_commondataserviceforapps"
+                      }
+                    }
+                  },
+                  "Post_message_in_a_chat_or_channel_2": {
+                    "runAfter": {
+                      "Update_a_row_Agent_Decision_2": [
+                        "Succeeded"
+                      ]
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "poster": "Flow bot",
+                        "location": "Chat with Flow bot",
+                        "body/recipient": "@triggerOutputs()?['body/ezm_requesteremail']",
+                        "body/messageBody": "<p class=\"editor-paragraph\">Your request @{triggerOutputs()?['body/ezm_requestnumber']}has been recorded and needs the IT service desk to complete it.</p>"
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                        "operationId": "PostMessageToConversation",
+                        "connectionName": "shared_teams"
+                      }
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@outputs('Get_Catalog_Fix')?['body/ezm_actioncode']",
+                      "@791760002"
+                    ]
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Passed_Rules": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {
+              "Update_a_row_Remediation_Requests": {
+                "metadata": {
+                  "operationMetadataId": "6041819f-d3b5-4ec0-bae7-d16e80fc2f3e"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "parameters": {
+                    "entityName": "ezm_remediationrequests",
+                    "recordId": "@triggerOutputs()?['body/ezm_remediationrequestid']",
+                    "item/ezm_requeststatus": 791760002,
+                    "item/ezm_runresult": "@variables('RejectReason')"
+                  },
+                  "host": {
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                    "operationId": "UpdateOnlyRecord",
+                    "connectionName": "shared_commondataserviceforapps"
+                  }
+                }
+              },
+              "Update_a_row_Agents_Decision": {
+                "runAfter": {
+                  "Update_a_row_Remediation_Requests": [
+                    "Succeeded"
+                  ]
+                },
+                "metadata": {
+                  "operationMetadataId": "4e338943-0f80-414e-a0e5-297daece07e3"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "parameters": {
+                    "entityName": "ezm_agentdecisions",
+                    "recordId": "@triggerOutputs()?['body/_ezm_agentdecision_value']",
+                    "item/ezm_outcome": 791760004
+                  },
+                  "host": {
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                    "operationId": "UpdateOnlyRecord",
+                    "connectionName": "shared_commondataserviceforapps"
+                  }
+                }
+              },
+              "Post_message_in_a_chat_or_channel": {
+                "runAfter": {
+                  "Update_a_row_Agents_Decision": [
+                    "Succeeded"
+                  ]
+                },
+                "metadata": {
+                  "operationMetadataId": "8130c779-48ef-4874-9a3f-795389d55367"
+                },
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "parameters": {
+                    "poster": "Flow bot",
+                    "location": "Chat with Flow bot",
+                    "body/recipient": "@{triggerOutputs()?['body/ezm_requesteremail']};",
+                    "body/messageBody": "<p>Your request @{triggerOutputs()?['body/ezm_requestnumber']} could not be processed: @{variables('RejectReason')}</p>"
+                  },
+                  "host": {
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                    "operationId": "PostMessageToConversation",
+                    "connectionName": "shared_teams"
+                  }
+                }
+              }
+            }
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@variables('RejectReason')",
+                  ""
+                ]
+              }
+            ]
+          },
+          "type": "If"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,11 @@
+kind: EvaluationData
+rows:
+  - source: Manual
+    expectedExecutionSteps:
+      - kind: ExpectedToolCallStep
+        schemaName: ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision
+
+    input: How do I connect to the company Wi-Fi on my phone?
+
+extensionData:
+  displayOrder: "1791110726337"

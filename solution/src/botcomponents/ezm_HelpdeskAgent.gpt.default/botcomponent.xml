@@ -1,0 +1,11 @@
+<botcomponent schemaname="ezm_HelpdeskAgent.gpt.default">
+  <componenttype>15</componenttype>
+  <description>IT helpdesk agent that triages employee IT requests and routes them to the right resolution path.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>AgentOps Helpdesk (Standard)</name>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

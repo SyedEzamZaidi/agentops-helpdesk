@@ -1,0 +1,102 @@
+kind: AdaptiveDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: SourceArticle
+    description: The KB article ID cited in the answer just given, for example KB-002. Leave empty if no article was cited.
+    shouldPromptUser: false
+
+modelDescription: Use immediately after the ag_Knowledge agent has answered an IT how-to question, to ask the user whether the answer solved their problem. Do not use in any other situation.
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent: {}
+  actions:
+    - kind: InvokeFlowAction
+      id: invokeFlowAction_rylUI4
+      input:
+        binding:
+          text: =System.Conversation.Id
+          text_1: Knowledge
+          text_2: Answered
+          text_3: =Topic.SourceArticle
+
+      output:
+        binding:
+          status: Topic.Status
+
+      flowId: 94576766-d9c1-f111-aaaf-70a8a56814ed
+
+    - kind: Question
+      id: question_UNggwr
+      interruptionPolicy:
+        allowInterruption: true
+
+      variable: init:Topic.Solved
+      prompt: Did this solve your problem?
+      entity:
+        kind: EmbeddedEntity
+        definition:
+          kind: ClosedListEntity
+          items:
+            - id: Yes
+              displayName: Yes
+
+            - id: No
+              displayName: No
+
+    - kind: ConditionGroup
+      id: conditionGroup_ybwNxk
+      conditions:
+        - id: conditionItem_uTjrKZ
+          condition: =Topic.Solved = 'ezm_HelpdeskAgent.topic.KnowledgeFeedback.main.question_UNggwr'.Yes
+          actions:
+            - kind: InvokeFlowAction
+              id: invokeFlowAction_mdMkoB
+              input:
+                binding:
+                  text: =System.Conversation.Id
+                  text_1: Knowledge
+                  text_2: Resolved (self-service)
+
+              output:
+                binding:
+                  status: Topic.Status
+
+              flowId: 94576766-d9c1-f111-aaaf-70a8a56814ed
+
+            - kind: SendActivity
+              id: sendActivity_UFCsQx
+              activity: Great, glad that sorted it.
+
+        - id: conditionItem_lRdXBy
+          condition: =Topic.Solved = 'ezm_HelpdeskAgent.topic.KnowledgeFeedback.main.question_UNggwr'.No
+          actions:
+            - kind: InvokeFlowAction
+              id: invokeFlowAction_VXtVCY
+              input:
+                binding:
+                  text: =System.Conversation.Id
+                  text_1: Knowledge
+                  text_2: Not found
+
+              output:
+                binding:
+                  status: Topic.Status
+
+              flowId: 94576766-d9c1-f111-aaaf-70a8a56814ed
+
+            - kind: SendActivity
+              id: sendActivity_sEB3a4
+              activity: Sorry that didn't help. I've recorded it so the IT team can follow up.
+
+    - kind: EndDialog
+      id: Jfs4An
+
+inputType:
+  properties:
+    SourceArticle:
+      displayName: SourceArticle
+      description: The KB article ID cited in the answer just given, for example KB-002. Leave empty if no article was cited.
+      type: String
+
+outputType: {}

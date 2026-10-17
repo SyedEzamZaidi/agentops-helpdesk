@@ -1,0 +1,12 @@
+<botcomponent schemaname="mspva_1caa7046-a350-4d77-bbf5-88c3c3b9113e">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>Evaluate AgentOps Helpdesk (Standard)</description>
+  <iscustomizable>0</iscustomizable>
+  <name>Evaluate AgentOps Helpdesk (Standard)</name>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

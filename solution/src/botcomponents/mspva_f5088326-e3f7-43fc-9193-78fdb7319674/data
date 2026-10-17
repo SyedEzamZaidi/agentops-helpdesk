@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Remediation
+    input: my account is locked after 3 wrong passwords
+
+extensionData:
+  displayOrder: "1791117639578"

@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_b5787fba-0146-48c5-a432-0bfd53af6d79">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>How do I connect to the company Wi-Fi on my phone?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>How do I connect to the company Wi-Fi on my phone?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_1caa7046-a350-4d77-bbf5-88c3c3b9113e</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

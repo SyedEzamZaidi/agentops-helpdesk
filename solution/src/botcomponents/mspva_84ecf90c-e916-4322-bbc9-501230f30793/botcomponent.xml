@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_84ecf90c-e916-4322-bbc9-501230f30793">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>how do I set up MFA on a new phone?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>how do I set up MFA on a new phone?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

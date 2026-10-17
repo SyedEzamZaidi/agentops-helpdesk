@@ -1,0 +1,4 @@
+kind: EvaluationSet
+graders:
+  - kind: ToolCallGrader
+    name: tool_name

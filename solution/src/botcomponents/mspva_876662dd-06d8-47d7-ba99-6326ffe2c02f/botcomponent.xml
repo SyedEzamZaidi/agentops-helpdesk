@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_876662dd-06d8-47d7-ba99-6326ffe2c02f">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>how do I share a large file securely with a client?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>how do I share a large file securely with a client?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

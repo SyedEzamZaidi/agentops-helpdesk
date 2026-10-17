@@ -1,0 +1,27 @@
+kind: TaskDialog
+inputs:
+  - kind: AutomaticTaskInput
+    propertyName: text_3
+
+  - kind: AutomaticTaskInput
+    propertyName: text_4
+
+  - kind: ManualTaskInput
+    propertyName: text
+    value: =System.Conversation.Id
+
+modelDisplayName: workflow_Common_UpdateDecision
+modelDescription: "Records how an IT request ended on its Agent Decision row: which agent handled it, the outcome, the cited KB article and any ServiceNow incident number. Called only from topics, never chosen by the AI."
+outputs:
+  - propertyName: status
+
+action:
+  kind: InvokeFlowTaskAction
+  flowId: 94576766-d9c1-f111-aaaf-70a8a56814ed
+  connectionProperties:
+    $kind: ConnectionProperties
+    diagnostics:
+    mode: Maker
+
+outputMode: All
+triggerCondition: false

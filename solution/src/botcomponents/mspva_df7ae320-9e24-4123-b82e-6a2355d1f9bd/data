@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Escalate
+    input: reset MFA for my manager she is travelling
+
+extensionData:
+  displayOrder: "1791117639568"

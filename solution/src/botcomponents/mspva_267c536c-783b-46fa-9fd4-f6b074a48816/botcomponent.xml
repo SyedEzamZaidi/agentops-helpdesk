@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_267c536c-783b-46fa-9fd4-f6b074a48816">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>nobody in the office can access email right now</description>
+  <iscustomizable>0</iscustomizable>
+  <name>nobody in the office can access email right now</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

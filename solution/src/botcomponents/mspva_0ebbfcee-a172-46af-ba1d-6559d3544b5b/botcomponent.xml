@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_0ebbfcee-a172-46af-ba1d-6559d3544b5b">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>what is the process to request a new laptop?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>what is the process to request a new laptop?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_5593293b-1433-4d85-962c-b0e849e0d997</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

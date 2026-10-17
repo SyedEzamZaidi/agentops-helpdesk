@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_61fcc596-9836-4aef-b819-b8a9a3f8c25e">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I lost my phone and can't complete MFA sign-in</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I lost my phone and can't complete MFA sign-in</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

@@ -1,0 +1,1026 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_7784ebd9"
+        },
+        "runtimeSource": "embedded",
+        "connectionName": "shared-commondataser-99d7b3ad-5c08-4e88-b50b-fc7ce2d7facd"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "RequestSummary",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true,
+                  "description": "One sentence describing what the employee needs."
+                },
+                "text_2": {
+                  "title": "Category",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true,
+                  "description": "The request category.",
+                  "enum": [
+                    "Knowledge",
+                    "Ticket",
+                    "Remediation",
+                    "Status Check",
+                    "Escalate"
+                  ]
+                },
+                "text_3": {
+                  "title": "RoutingReason",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true,
+                  "description": "One short sentence explaining why this category was chosen. "
+                },
+                "text_4": {
+                  "title": "RequesterEmail",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true,
+                  "description": "Requester's email, set by the system."
+                },
+                "text_1": {
+                  "title": "ConversationId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true,
+                  "description": "Conversation ID, set by the system."
+                }
+              },
+              "required": [
+                "text",
+                "text_2",
+                "text_3",
+                "text_4",
+                "text_1"
+              ]
+            }
+          },
+          "metadata": {
+            "associatedData": {
+              "graph": {
+                "name": "wf_Triage_LogRoutingDecision",
+                "nodes": [
+                  {
+                    "id": "start-4f43f319-1e11-4393-af79-c8886e0b6623",
+                    "name": "When an agent calls the flow",
+                    "type": "start",
+                    "version": 1,
+                    "position": {
+                      "x": -542,
+                      "y": 307.11114501953125
+                    },
+                    "data": {
+                      "config": {
+                        "triggerType": "connector",
+                        "connector": {
+                          "apiName": "Skills",
+                          "operationName": "When_an_agent_calls_the_flow",
+                          "displayName": "When an agent calls the flow",
+                          "kind": "Skills",
+                          "inputs": {
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "title": "RequestSummary",
+                                  "type": "string",
+                                  "x-ms-content-hint": "TEXT",
+                                  "x-ms-dynamically-added": true,
+                                  "description": "One sentence describing what the employee needs."
+                                },
+                                "text_2": {
+                                  "title": "Category",
+                                  "type": "string",
+                                  "x-ms-content-hint": "TEXT",
+                                  "x-ms-dynamically-added": true,
+                                  "description": "The request category.",
+                                  "enum": [
+                                    "Knowledge",
+                                    "Ticket",
+                                    "Remediation",
+                                    "Status Check",
+                                    "Escalate"
+                                  ]
+                                },
+                                "text_3": {
+                                  "title": "RoutingReason",
+                                  "type": "string",
+                                  "x-ms-content-hint": "TEXT",
+                                  "x-ms-dynamically-added": true,
+                                  "description": "One short sentence explaining why this category was chosen. "
+                                },
+                                "text_4": {
+                                  "title": "RequesterEmail",
+                                  "type": "string",
+                                  "x-ms-content-hint": "TEXT",
+                                  "x-ms-dynamically-added": true,
+                                  "description": "Requester's email, set by the system."
+                                },
+                                "text_1": {
+                                  "title": "ConversationId",
+                                  "type": "string",
+                                  "x-ms-content-hint": "TEXT",
+                                  "x-ms-dynamically-added": true,
+                                  "description": "Conversation ID, set by the system."
+                                }
+                              },
+                              "required": [
+                                "text",
+                                "text_2",
+                                "text_3",
+                                "text_4",
+                                "text_1"
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "outcomes": [
+                        {
+                          "id": "default",
+                          "label": "Default",
+                          "outcomeSchema": {
+                            "type": "object",
+                            "description": "Trigger output (schema determined by connector)"
+                          }
+                        }
+                      ]
+                    },
+                    "measured": {
+                      "width": 261,
+                      "height": 66
+                    }
+                  },
+                  {
+                    "id": "builtinFunction-c48da9b8-f900-48f1-8c6a-bb3891fef983",
+                    "name": "Respond to the agent",
+                    "type": "builtinFunction",
+                    "version": 1,
+                    "position": {
+                      "x": 251.10292488745608,
+                      "y": 316.18737865956177
+                    },
+                    "data": {
+                      "config": {
+                        "operationId": "response",
+                        "operationName": "response",
+                        "displayName": "Respond to the agent",
+                        "category": "request",
+                        "categoryDisplayName": "Request",
+                        "iconUri": "",
+                        "brandColor": "",
+                        "parameters": {
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "title": "DecisionId",
+                                "type": "string",
+                                "x-ms-content-hint": "TEXT",
+                                "x-ms-dynamically-added": true
+                              }
+                            },
+                            "required": [
+                              "text"
+                            ]
+                          },
+                          "body": {
+                            "text": "@outputs('connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7')?['body/ezm_agentdecisionid']"
+                          }
+                        },
+                        "description": "Respond to the calling agent with typed outputs.",
+                        "kind": "Skills"
+                      },
+                      "outcomes": [
+                        {
+                          "id": "default",
+                          "label": "Default",
+                          "outcomeSchema": {
+                            "type": "object",
+                            "description": "Function output"
+                          }
+                        }
+                      ]
+                    },
+                    "measured": {
+                      "width": 240,
+                      "height": 66
+                    },
+                    "selected": false
+                  },
+                  {
+                    "id": "connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7",
+                    "name": "Add a new row",
+                    "type": "connector",
+                    "version": 1,
+                    "position": {
+                      "x": -136.71658982044883,
+                      "y": 315.54003171763429
+                    },
+                    "data": {
+                      "config": {
+                        "apiName": "shared_commondataserviceforapps",
+                        "displayName": "Microsoft Dataverse",
+                        "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1831/1.0.1831.5064/commondataserviceforapps/icon.png",
+                        "brandColor": "",
+                        "operationName": "CreateRecord",
+                        "operationType": "OpenApiConnection",
+                        "parametersSchema": {
+                          "type": "object",
+                          "properties": {
+                            "x-ms-odata-metadata-full": {
+                              "type": "boolean",
+                              "title": "Return Full Metadata",
+                              "description": "The header parameter to customer to opt-in returning full odata metadata in response.",
+                              "x-ms-visibility": "advanced",
+                              "x-ms-property-name-alias": "x-ms-odata-metadata-full"
+                            },
+                            "entityName": {
+                              "type": "string",
+                              "title": "Table name",
+                              "x-ms-dynamic-list": {
+                                "operationId": "GetEntities",
+                                "parameters": {},
+                                "itemsPath": "value",
+                                "itemValuePath": "EntitySetName",
+                                "itemTitlePath": "DisplayCollectionName/UserLocalizedLabel/Label"
+                              },
+                              "description": "Choose a table",
+                              "minLength": 1,
+                              "x-ms-property-name-alias": "entityName"
+                            },
+                            "item": {
+                              "type": "object",
+                              "title": "Row Item",
+                              "x-ms-dynamic-properties": {
+                                "operationId": "GetMetadataForPostEntity",
+                                "parameters": {
+                                  "entityName": {
+                                    "parameterReference": "entityName",
+                                    "required": true
+                                  }
+                                },
+                                "itemValuePath": "schema"
+                              },
+                              "description": "Row to create",
+                              "x-ms-property-name-alias": "item"
+                            }
+                          },
+                          "required": [
+                            "entityName",
+                            "item"
+                          ]
+                        },
+                        "connectionName": "shared_commondataserviceforapps",
+                        "parameters": {
+                          "entityName": "ezm_agentdecisions",
+                          "item/ezm_conversationid": "@triggerOutputs()?['body/text_1']",
+                          "item/ezm_handledby": 791760000,
+                          "item/ezm_name": "@triggerOutputs()?['body/text']",
+                          "item/ezm_requesteremail": "@triggerOutputs()?['body/text_4']",
+                          "item/ezm_routingreason": "@triggerOutputs()?['body/text_3']",
+                          "item/ezm_requestsummary": "@triggerOutputs()?['body/text']",
+                          "item/ezm_category": "@if(equals(triggerBody()?['text_2'],'Knowledge'),791760000,if(equals(triggerBody()?['text_2'],'Ticket'),791760001,if(equals(triggerBody()?['text_2'],'Remediation'),791760002,if(equals(triggerBody()?['text_2'],'Status Check'),791760003,791760004))))"
+                        },
+                        "resolvedDynamicSchemas": {
+                          "item": {
+                            "type": "object",
+                            "properties": {
+                              "ezm_agentdecisionid": {
+                                "type": "string",
+                                "title": "Agent Decision",
+                                "format": "guid",
+                                "description": "Unique identifier for entity instances",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_agentdecisionid"
+                              },
+                              "ezm_category": {
+                                "type": "integer",
+                                "title": "Category",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "cbffe156-a3bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Routing category assigned by the Triage agent",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_category"
+                              },
+                              "ezm_conversationid": {
+                                "type": "string",
+                                "title": "Conversation ID",
+                                "description": "",
+                                "maxLength": 200,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_conversationid"
+                              },
+                              "ezm_handledby": {
+                                "type": "integer",
+                                "title": "Handled By",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "f95484ca-a3bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Which agent ultimately handled the request",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_handledby"
+                              },
+                              "importsequencenumber": {
+                                "type": "integer",
+                                "title": "Import Sequence Number",
+                                "format": "int32",
+                                "description": "Sequence number of the import that created this record.",
+                                "maximum": 2147483647,
+                                "minimum": -2147483648,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "importsequencenumber"
+                              },
+                              "ezm_incidentnumber": {
+                                "type": "string",
+                                "title": "Incident Number",
+                                "description": "",
+                                "maxLength": 40,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_incidentnumber"
+                              },
+                              "ezm_name": {
+                                "type": "string",
+                                "title": "Name",
+                                "description": "",
+                                "maxLength": 500,
+                                "x-ms-visibility": "important",
+                                "x-ms-property-name-alias": "ezm_name"
+                              },
+                              "ezm_outcome": {
+                                "type": "integer",
+                                "title": "Outcome",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "980218a2-a4bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_outcome"
+                              },
+                              "ownerid@odata.bind": {
+                                "type": "string",
+                                "title": "Owner (Owners)",
+                                "description": "Owner Id",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ownerid@odata.bind"
+                              },
+                              "overriddencreatedon": {
+                                "type": "string",
+                                "title": "Record Created On",
+                                "format": "date-time",
+                                "description": "Date and time that the record was migrated.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "overriddencreatedon"
+                              },
+                              "ezm_requestsummary": {
+                                "type": "string",
+                                "title": "Request Summary",
+                                "description": "AI-generated one-sentence summary of what the user needs, including context from the conversation",
+                                "maxLength": 2000,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_requestsummary"
+                              },
+                              "ezm_requesteremail": {
+                                "type": "string",
+                                "title": "Requester Email",
+                                "description": "",
+                                "maxLength": 200,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_requesteremail"
+                              },
+                              "ezm_routingreason": {
+                                "type": "string",
+                                "title": "Routing Reason",
+                                "description": "Short explanation from the Triage agent for why it chose this category",
+                                "maxLength": 2000,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "ezm_routingreason"
+                              },
+                              "statuscode": {
+                                "type": "integer",
+                                "title": "Status Reason",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "caee7e3b-29b4-4372-9e3f-79225915e92b"
+                                    },
+                                    "type": {
+                                      "value": "Status"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Reason for the status of the Agent Decision",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "statuscode"
+                              },
+                              "timezoneruleversionnumber": {
+                                "type": "integer",
+                                "title": "Time Zone Rule Version Number",
+                                "format": "int32",
+                                "description": "For internal use only.",
+                                "maximum": 2147483647,
+                                "minimum": -1,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "timezoneruleversionnumber"
+                              },
+                              "utcconversiontimezonecode": {
+                                "type": "integer",
+                                "title": "UTC Conversion Time Zone Code",
+                                "format": "int32",
+                                "description": "Time zone code that was in use when the record was created.",
+                                "maximum": 2147483647,
+                                "minimum": -1,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "utcconversiontimezonecode"
+                              }
+                            },
+                            "required": [
+                              "ezm_name"
+                            ]
+                          }
+                        }
+                      },
+                      "outcomes": [
+                        {
+                          "id": "default",
+                          "label": "Default",
+                          "outcomeSchema": {
+                            "type": "object",
+                            "properties": {
+                              "ezm_agentdecisionid": {
+                                "type": "string",
+                                "title": "Agent Decision",
+                                "format": "guid",
+                                "description": "Unique identifier for entity instances",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_agentdecisionid"
+                              },
+                              "ezm_category": {
+                                "type": "integer",
+                                "title": "Category",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "cbffe156-a3bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Routing category assigned by the Triage agent",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_category"
+                              },
+                              "ezm_conversationid": {
+                                "type": "string",
+                                "title": "Conversation ID",
+                                "description": "",
+                                "maxLength": 200,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_conversationid"
+                              },
+                              "_createdonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Created By (Delegate) (Type)",
+                                "description": "Unique identifier of the delegate user who created the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_createdonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_createdonbehalfby_value": {
+                                "type": "string",
+                                "title": "Created By (Delegate) (Value)",
+                                "description": "Unique identifier of the delegate user who created the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_createdonbehalfby_value"
+                              },
+                              "_createdby_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Created By (Type)",
+                                "description": "Unique identifier of the user who created the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_createdby_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_createdby_value": {
+                                "type": "string",
+                                "title": "Created By (Value)",
+                                "description": "Unique identifier of the user who created the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_createdby_value"
+                              },
+                              "createdon": {
+                                "type": "string",
+                                "title": "Created On",
+                                "format": "date-time",
+                                "description": "Date and time when the record was created.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/createdon"
+                              },
+                              "ezm_handledby": {
+                                "type": "integer",
+                                "title": "Handled By",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "f95484ca-a3bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Which agent ultimately handled the request",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_handledby"
+                              },
+                              "importsequencenumber": {
+                                "type": "integer",
+                                "title": "Import Sequence Number",
+                                "format": "int32",
+                                "description": "Sequence number of the import that created this record.",
+                                "maximum": 2147483647,
+                                "minimum": -2147483648,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/importsequencenumber"
+                              },
+                              "ezm_incidentnumber": {
+                                "type": "string",
+                                "title": "Incident Number",
+                                "description": "",
+                                "maxLength": 40,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_incidentnumber"
+                              },
+                              "_modifiedonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Modified By (Delegate) (Type)",
+                                "description": "Unique identifier of the delegate user who modified the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_modifiedonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_modifiedonbehalfby_value": {
+                                "type": "string",
+                                "title": "Modified By (Delegate) (Value)",
+                                "description": "Unique identifier of the delegate user who modified the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_modifiedonbehalfby_value"
+                              },
+                              "_modifiedby_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Modified By (Type)",
+                                "description": "Unique identifier of the user who modified the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_modifiedby_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_modifiedby_value": {
+                                "type": "string",
+                                "title": "Modified By (Value)",
+                                "description": "Unique identifier of the user who modified the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_modifiedby_value"
+                              },
+                              "modifiedon": {
+                                "type": "string",
+                                "title": "Modified On",
+                                "format": "date-time",
+                                "description": "Date and time when the record was modified.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/modifiedon"
+                              },
+                              "ezm_name": {
+                                "type": "string",
+                                "title": "Name",
+                                "description": "",
+                                "maxLength": 500,
+                                "x-ms-visibility": "important",
+                                "x-ms-property-name-alias": "body/ezm_name"
+                              },
+                              "@odata.id": {
+                                "type": "string",
+                                "title": "OData Id",
+                                "description": "OData row id",
+                                "x-ms-visibility": "important",
+                                "x-ms-property-name-alias": "body/@odata.id"
+                              },
+                              "ezm_outcome": {
+                                "type": "integer",
+                                "title": "Outcome",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "980218a2-a4bd-f111-aaaf-70a8a56814ed"
+                                    },
+                                    "type": {
+                                      "value": "Picklist"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_outcome"
+                              },
+                              "_ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Owner (Type)",
+                                "description": "Owner Id",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_ownerid_value": {
+                                "type": "string",
+                                "title": "Owner (Value)",
+                                "description": "Owner Id",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_ownerid_value"
+                              },
+                              "_owningbusinessunit_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Owning Business Unit (Type)",
+                                "description": "Unique identifier for the business unit that owns the record",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owningbusinessunit_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_owningbusinessunit_value": {
+                                "type": "string",
+                                "title": "Owning Business Unit (Value)",
+                                "description": "Unique identifier for the business unit that owns the record",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owningbusinessunit_value"
+                              },
+                              "_owningteam_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Owning Team (Type)",
+                                "description": "Unique identifier for the team that owns the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owningteam_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_owningteam_value": {
+                                "type": "string",
+                                "title": "Owning Team (Value)",
+                                "description": "Unique identifier for the team that owns the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owningteam_value"
+                              },
+                              "_owninguser_value@Microsoft.Dynamics.CRM.lookuplogicalname": {
+                                "type": "string",
+                                "title": "Owning User (Type)",
+                                "description": "Unique identifier for the user that owns the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owninguser_value@Microsoft.Dynamics.CRM.lookuplogicalname"
+                              },
+                              "_owninguser_value": {
+                                "type": "string",
+                                "title": "Owning User (Value)",
+                                "description": "Unique identifier for the user that owns the record.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/_owninguser_value"
+                              },
+                              "overriddencreatedon": {
+                                "type": "string",
+                                "title": "Record Created On",
+                                "format": "date-time",
+                                "description": "Date and time that the record was migrated.",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/overriddencreatedon"
+                              },
+                              "ezm_requestsummary": {
+                                "type": "string",
+                                "title": "Request Summary",
+                                "description": "AI-generated one-sentence summary of what the user needs, including context from the conversation",
+                                "maxLength": 2000,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_requestsummary"
+                              },
+                              "ezm_requesteremail": {
+                                "type": "string",
+                                "title": "Requester Email",
+                                "description": "",
+                                "maxLength": 200,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_requesteremail"
+                              },
+                              "ezm_routingreason": {
+                                "type": "string",
+                                "title": "Routing Reason",
+                                "description": "Short explanation from the Triage agent for why it chose this category",
+                                "maxLength": 2000,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/ezm_routingreason"
+                              },
+                              "statecode": {
+                                "type": "integer",
+                                "title": "Status",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "fb9f7360-665b-47fa-900e-3e9effbb5167"
+                                    },
+                                    "type": {
+                                      "value": "State"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Status of the Agent Decision",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/statecode"
+                              },
+                              "statuscode": {
+                                "type": "integer",
+                                "title": "Status Reason",
+                                "x-ms-dynamic-list": {
+                                  "operationId": "GetOptionSetMetadataWithEntitySetName",
+                                  "parameters": {
+                                    "entityName": {
+                                      "parameterReference": "entityName",
+                                      "required": true
+                                    },
+                                    "attributeMetadataId": {
+                                      "value": "caee7e3b-29b4-4372-9e3f-79225915e92b"
+                                    },
+                                    "type": {
+                                      "value": "Status"
+                                    }
+                                  },
+                                  "itemsPath": "value",
+                                  "itemValuePath": "value",
+                                  "itemTitlePath": "Label/UserLocalizedLabel/Label"
+                                },
+                                "format": "int32",
+                                "description": "Reason for the status of the Agent Decision",
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/statuscode"
+                              },
+                              "timezoneruleversionnumber": {
+                                "type": "integer",
+                                "title": "Time Zone Rule Version Number",
+                                "format": "int32",
+                                "description": "For internal use only.",
+                                "maximum": 2147483647,
+                                "minimum": -1,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/timezoneruleversionnumber"
+                              },
+                              "utcconversiontimezonecode": {
+                                "type": "integer",
+                                "title": "UTC Conversion Time Zone Code",
+                                "format": "int32",
+                                "description": "Time zone code that was in use when the record was created.",
+                                "maximum": 2147483647,
+                                "minimum": -1,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/utcconversiontimezonecode"
+                              },
+                              "versionnumber": {
+                                "type": "integer",
+                                "title": "Version Number",
+                                "format": "int64",
+                                "description": "Version Number",
+                                "maximum": 9223372036854776000,
+                                "minimum": -9223372036854776000,
+                                "x-ms-visibility": "advanced",
+                                "x-ms-property-name-alias": "body/versionnumber"
+                              }
+                            },
+                            "required": []
+                          }
+                        }
+                      ]
+                    },
+                    "measured": {
+                      "width": 240,
+                      "height": 66
+                    }
+                  }
+                ],
+                "edges": [
+                  {
+                    "id": "edge-start-4f43f319-1e11-4393-af79-c8886e0b6623-connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7",
+                    "source": "start-4f43f319-1e11-4393-af79-c8886e0b6623",
+                    "target": "connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7"
+                  },
+                  {
+                    "id": "edge-connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7-builtinFunction-c48da9b8-f900-48f1-8c6a-bb3891fef983",
+                    "source": "connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7",
+                    "target": "builtinFunction-c48da9b8-f900-48f1-8c6a-bb3891fef983"
+                  }
+                ],
+                "connectionReferences": {
+                  "shared_commondataserviceforapps": {
+                    "api": {
+                      "name": "shared_commondataserviceforapps"
+                    },
+                    "connection": {
+                      "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_7784ebd9"
+                    },
+                    "runtimeSource": "embedded",
+                    "connectionName": "shared-commondataser-99d7b3ad-5c08-4e88-b50b-fc7ce2d7facd"
+                  }
+                }
+              },
+              "nodeActionMapping": {
+                "connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7": [
+                  "Add_a_new_row"
+                ],
+                "builtinFunction-c48da9b8-f900-48f1-8c6a-bb3891fef983": [
+                  "Respond_to_the_agent"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "actions": {
+        "Add_a_new_row": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "ezm_agentdecisions",
+              "item/ezm_conversationid": "@triggerOutputs()?['body/text_1']",
+              "item/ezm_handledby": 791760000,
+              "item/ezm_name": "@triggerOutputs()?['body/text']",
+              "item/ezm_requesteremail": "@triggerOutputs()?['body/text_4']",
+              "item/ezm_routingreason": "@triggerOutputs()?['body/text_3']",
+              "item/ezm_requestsummary": "@triggerOutputs()?['body/text']",
+              "item/ezm_category": "@if(equals(triggerBody()?['text_2'],'Knowledge'),791760000,if(equals(triggerBody()?['text_2'],'Ticket'),791760001,if(equals(triggerBody()?['text_2'],'Remediation'),791760002,if(equals(triggerBody()?['text_2'],'Status Check'),791760003,791760004))))"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "CreateRecord"
+            }
+          },
+          "metadata": {
+            "description": "Add a new row",
+            "nodeId": "connector-d8dd2af4-0d0b-4281-95bd-3fe612d359f7"
+          }
+        },
+        "Respond_to_the_agent": {
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "DecisionId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text"
+              ]
+            },
+            "statusCode": 200,
+            "body": {
+              "text": "@outputs('Add_a_new_row')?['body/ezm_agentdecisionid']"
+            }
+          },
+          "runAfter": {
+            "Add_a_new_row": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "description": "Respond to the agent",
+            "nodeId": "builtinFunction-c48da9b8-f900-48f1-8c6a-bb3891fef983"
+          }
+        }
+      },
+      "outputs": {},
+      "metadata": {
+        "telemetryMetadata": {
+          "creationSource": "WorkflowDesigner",
+          "modifiedSources": "WorkflowDesigner"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

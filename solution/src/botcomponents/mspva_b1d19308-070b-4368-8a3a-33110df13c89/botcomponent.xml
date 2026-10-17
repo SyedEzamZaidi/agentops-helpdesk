@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_b1d19308-070b-4368-8a3a-33110df13c89">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I'm locked out of my account</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I'm locked out of my account</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

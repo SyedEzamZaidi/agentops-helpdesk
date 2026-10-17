@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_49117ab8-7ee8-42f5-bd75-6b2500e8508b">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>I think my account has been hacked</description>
+  <iscustomizable>0</iscustomizable>
+  <name>I think my account has been hacked</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

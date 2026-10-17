@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_a4bf3608-297a-4c97-9f35-54fb08bc89a1">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>the printer on floor 3 is printing blank pages</description>
+  <iscustomizable>0</iscustomizable>
+  <name>the printer on floor 3 is printing blank pages</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_b6bcaf12-4b6d-4dbd-bc81-f13483729654</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

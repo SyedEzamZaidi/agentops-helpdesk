@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_51c69ce4-3553-4def-9a7f-d08953a3285f">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>has anyone looked at my laptop issue yet?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>has anyone looked at my laptop issue yet?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_5593293b-1433-4d85-962c-b0e849e0d997</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

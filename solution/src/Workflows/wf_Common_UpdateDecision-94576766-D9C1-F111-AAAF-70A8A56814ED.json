@@ -1,0 +1,498 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_7784ebd9"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "2c8aa279-bf23-4ed2-8523-d4c8fcfecb65"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "ConversationId",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Conversation ID of the current chat, set by the system.",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "HandledBy",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Agent that handled the request.",
+                  "x-ms-content-hint": "TEXT",
+                  "enum": [
+                    "Knowledge",
+                    "ServiceNow",
+                    "Remediation",
+                    "Escalation"
+                  ]
+                },
+                "text_2": {
+                  "title": "Outcome",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Result of the request.",
+                  "x-ms-content-hint": "TEXT",
+                  "enum": [
+                    "Answered",
+                    "Ticket Created",
+                    "Remediated",
+                    "Escalated",
+                    "Failed",
+                    "Resolved (self-service)",
+                    "Not found"
+                  ]
+                },
+                "text_3": {
+                  "title": "SourceArticle",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "KB article ID used, e.g. KB-002.",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_4": {
+                  "title": "IncidentNumber",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "ServiceNow incident number, if one was created.",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Find_Latest_Decision": {
+          "runAfter": {
+            "Switch_Outcome": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "113fd2ef-5490-40cb-b941-ee39e00b4134"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "ezm_agentdecisions",
+              "$filter": "ezm_conversationid eq '@{triggerBody()['text']}'",
+              "$orderby": "createdon desc",
+              "$top": 1
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          }
+        },
+        "Initialize_variable": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "39391ca7-3bf3-4cbc-a541-bfb6c1999f25"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "HandledByValue",
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_2": {
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5be44bbf-8aa3-49d6-9318-7eda37450061"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "OutcomeValue",
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "Switch": {
+          "runAfter": {
+            "Initialize_variable_2": [
+              "Succeeded"
+            ]
+          },
+          "cases": {
+            "Knowledge": {
+              "case": "Knowledge",
+              "actions": {
+                "Set_variable": {
+                  "metadata": {
+                    "operationMetadataId": "69543061-5242-4815-9aef-ec5c148ebd7a"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "HandledByValue",
+                    "value": 791760001
+                  }
+                }
+              }
+            },
+            "ServiceNow": {
+              "case": "ServiceNow",
+              "actions": {
+                "Set_variable_2": {
+                  "metadata": {
+                    "operationMetadataId": "657cf9a5-21f7-4c62-b39c-1b53173be956"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "HandledByValue",
+                    "value": 791760002
+                  }
+                }
+              }
+            },
+            "Remediation": {
+              "case": "Remediation",
+              "actions": {
+                "Set_variable_3": {
+                  "metadata": {
+                    "operationMetadataId": "baaac3ff-2a74-4fa9-bc36-b891747fb198"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "HandledByValue",
+                    "value": 791760003
+                  }
+                }
+              }
+            },
+            "Escalation": {
+              "case": "Escalation",
+              "actions": {
+                "Set_variable_4": {
+                  "metadata": {
+                    "operationMetadataId": "b0f73619-d24e-468c-996c-3aad054686fa"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "HandledByValue",
+                    "value": 791760004
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "actions": {
+              "Terminate": {
+                "type": "Terminate",
+                "inputs": {
+                  "runStatus": "Failed"
+                }
+              }
+            }
+          },
+          "expression": "@triggerBody()['text_1']",
+          "metadata": {
+            "operationMetadataId": "1da08bab-1332-4331-886b-367873042df4"
+          },
+          "type": "Switch"
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('Find_Latest_Decision')?['body/value']",
+          "actions": {
+            "Update_a_row": {
+              "metadata": {
+                "operationMetadataId": "53b7d699-79a6-425c-a9e8-8d28d51d9ace"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "entityName": "ezm_agentdecisions",
+                  "recordId": "@items('Apply_to_each')?['ezm_agentdecisionid']",
+                  "item/ezm_handledby": "@variables('HandledByValue')",
+                  "item/ezm_outcome": "@variables('OutcomeValue')"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "UpdateOnlyRecord",
+                  "connectionName": "shared_commondataserviceforapps"
+                }
+              }
+            },
+            "If_SourceArticle_passed": {
+              "actions": {
+                "Update_Source_Article": {
+                  "metadata": {
+                    "operationMetadataId": "2715da56-e576-414c-8c42-88a8e9216ae2"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "ezm_agentdecisions",
+                      "recordId": "@outputs('Update_a_row')?['body/ezm_agentdecisionid']",
+                      "item/ezm_sourcearticle": "@triggerBody()?['text_3']"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Update_a_row": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@triggerBody()?['text_3']",
+                        ""
+                      ]
+                    }
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "fb6a9b16-3c5f-448c-83b1-d75ddd1eef35"
+              },
+              "type": "If"
+            },
+            "If_Incident_Number": {
+              "actions": {
+                "Update_incident_number": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "ezm_agentdecisions",
+                      "recordId": "@items('Apply_to_each')?['ezm_agentdecisionid']",
+                      "item/ezm_incidentnumber": "@triggerBody()?['text_4']"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "If_SourceArticle_passed": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@triggerBody()?['text_4']",
+                        ""
+                      ]
+                    }
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Find_Latest_Decision": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81646f7f-22b5-41a0-8224-5a4797b33459"
+          },
+          "type": "Foreach"
+        },
+        "Switch_Outcome": {
+          "runAfter": {
+            "Switch": [
+              "Succeeded"
+            ]
+          },
+          "cases": {
+            "Answered": {
+              "case": "Answered",
+              "actions": {
+                "Set_variable_1": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760000
+                  }
+                }
+              }
+            },
+            "Ticket_Created": {
+              "case": "Ticket Created",
+              "actions": {
+                "Set_variable_5": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760001
+                  }
+                }
+              }
+            },
+            "Remediated": {
+              "case": "Remediated",
+              "actions": {
+                "Set_variable_6": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760002
+                  }
+                }
+              }
+            },
+            "Escalated": {
+              "case": "Escalated",
+              "actions": {
+                "Set_variable_7": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760003
+                  }
+                }
+              }
+            },
+            "Failed": {
+              "case": "Failed",
+              "actions": {
+                "Set_variable_8": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760004
+                  }
+                }
+              }
+            },
+            "Resolved_(self-service)": {
+              "case": "Resolved (self-service)",
+              "actions": {
+                "Set_variable_9": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760005
+                  }
+                }
+              }
+            },
+            "Not_found": {
+              "case": "Not found",
+              "actions": {
+                "Set_variable_10": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "OutcomeValue",
+                    "value": 791760006
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "actions": {
+              "Terminate_1": {
+                "type": "Terminate",
+                "inputs": {
+                  "runStatus": "Failed"
+                }
+              }
+            }
+          },
+          "expression": "@triggerBody()?['text_2']",
+          "type": "Switch"
+        },
+        "Respond_to_the_agent": {
+          "runAfter": {
+            "Apply_to_each": [
+              "Succeeded"
+            ]
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "title": "Status",
+                  "description": "Confirms the Agent Decision row was updated.",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "status": "Updated"
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

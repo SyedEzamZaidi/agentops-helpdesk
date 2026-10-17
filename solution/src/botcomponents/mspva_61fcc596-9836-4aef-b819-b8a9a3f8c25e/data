@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Remediation
+    input: I lost my phone and can't complete MFA sign-in
+
+extensionData:
+  displayOrder: "1791117639577"

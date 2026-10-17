@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Ticket
+    input: my second monitor stopped working after the update
+
+extensionData:
+  displayOrder: "1791117639583"

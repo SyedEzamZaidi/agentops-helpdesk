@@ -1,0 +1,24 @@
+kind: EvaluationSet
+graders:
+  - kind: ToolCallGrader
+    name: tool_name
+
+  - kind: PromptGrader
+    name: Reply policy check
+    instructions: |-
+      Judge only the agent's reply to the user against the helpdesk reply policy:
+      - No internal category labels shown as labels ("Category: Ticket", "Knowledge", "Remediation", "Status Check", "Escalate").
+      - No internal fields or technical content: no "Summary:", "Reason:", JSON, tool names, tool parameters or field names such as text_2.
+      - Briefly confirms in plain language what the user needs and that the request has been logged.
+      - No timeline or outcome promise (for example "shortly", "soon", "quickly", "within 24 hours", "will be fixed", "will be unlocked").
+      - No emojis.
+      - If the user reports a possible security incident (hacked account, phishing, entered a password on a suspicious link), the reply must also tell the user to change their password and contact the IT security team.
+      Do not judge whether the category itself was correct. Choose one overall label. If unsure, choose Policy violation.
+    labels:
+      - name: Compliant
+        description: "Meets every policy point: plain-language confirmation that the request was understood and logged; no labels, internal fields, JSON or tool details; no timeline or outcome promise; no emojis; security advice included when a security incident is reported. Example: \"Got it, your report that your account may be compromised has been logged. Please change your password now and contact the IT security team immediately.\""
+        outcome: Pass
+
+      - name: Policy violation
+        description: "Breaks at least one policy point: shows a category, internal field, JSON or tool detail; promises a timeline or outcome; uses emojis; does not confirm the request was logged; or omits security advice for a reported security incident. Example: \"Category: Escalate. IT will unlock the account shortly.\""
+        outcome: Fail

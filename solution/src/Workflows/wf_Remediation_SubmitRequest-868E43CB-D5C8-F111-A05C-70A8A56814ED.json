@@ -1,0 +1,364 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedcommondataserviceforapps_7784ebd9"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "f27598cb-96ff-45c6-bc28-e0e7f40c19d6"
+          },
+          "type": "Request",
+          "kind": "Skills",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "ActionCode",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Catalog fix requested",
+                  "enum": [
+                    "UNLOCK_ACCOUNT",
+                    "RESET_MFA",
+                    "ENABLE_VPN_ACCESS"
+                  ],
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "TargetUserEmail",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Email of the user whose account is changed",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "title": "RequesterEmail",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Signed-in user's email",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_3": {
+                  "title": "ConversationId",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Copilot Studio conversation ID",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Initialize_variable_for_ACtion_COde": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "7bb45696-8cbb-4c89-afd0-e315996e7b7e"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ActionCodeValue",
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_for_Request_Number": {
+          "runAfter": {
+            "Initialize_variable_for_ACtion_COde": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "90ff929b-5ec3-4bd1-b22b-9fa25c246164"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "RequestNumber",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Switch_for_Action_Code": {
+          "runAfter": {
+            "Initialize_variable_for_Request_Number": [
+              "Succeeded"
+            ]
+          },
+          "cases": {
+            "UNLOCK_ACCOUNT": {
+              "case": "UNLOCK_ACCOUNT",
+              "actions": {
+                "Set_variable": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "7ea4e0d4-d200-4f0e-b35b-765d572ebe82"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ActionCodeValue",
+                    "value": 791760000
+                  }
+                }
+              }
+            },
+            "RESET_MFA": {
+              "case": "RESET_MFA",
+              "actions": {
+                "Set_variable_2": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "a7678742-405f-4233-b501-87d377028edb"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ActionCodeValue",
+                    "value": 791760001
+                  }
+                }
+              }
+            },
+            "ENABLE_VPN_ACCESS": {
+              "case": "ENABLE_VPN_ACCESS",
+              "actions": {
+                "Set_variable_3": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "d63a73be-6958-4fbf-82e4-a748e597018e"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ActionCodeValue",
+                    "value": 791760002
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "actions": {
+              "Terminate": {
+                "runAfter": {},
+                "metadata": {
+                  "operationMetadataId": "1551353c-70fe-4f8e-8d7a-c95a5fe48a38"
+                },
+                "type": "Terminate",
+                "inputs": {
+                  "runStatus": "Failed",
+                  "runError": {
+                    "code": "InvalidActionCode"
+                  }
+                }
+              }
+            }
+          },
+          "expression": "@triggerBody()['text']",
+          "metadata": {
+            "operationMetadataId": "f7c76e25-1bf7-407e-a8c4-68edf670d28c"
+          },
+          "type": "Switch"
+        },
+        "Find_Catalog_Fix": {
+          "runAfter": {
+            "Switch_for_Action_Code": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ebd39690-7525-482d-b92f-d37ce5907030"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "ezm_remediationcatalogs",
+              "$filter": "ezm_actioncode eq @{variables('ActionCodeValue')}and ezm_active eq true",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Find_Latest_Decision": {
+          "runAfter": {
+            "Find_Catalog_Fix": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5d57341f-4763-4eb5-a730-13e811ba839a"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "ezm_agentdecisions",
+              "$filter": "ezm_conversationid eq '@{triggerBody()['text_3']}'",
+              "$orderby": "createdon desc",
+              "$top": 1
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Apply_to_each_(For_Catalog)": {
+          "foreach": "@outputs('Find_Catalog_Fix')?['body/value']",
+          "actions": {
+            "Apply_to_each_(For_Decision_ROw)": {
+              "foreach": "@outputs('Find_Latest_Decision')?['body/value']",
+              "actions": {
+                "Create_Remediation_Request": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "6cd72fc3-6f68-40c3-83f3-b45f06b775fa"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "ezm_remediationrequests",
+                      "item/ezm_AgentDecision@odata.bind": "ezm_agentdecisions(@{items('Apply_to_each_(For_Decision_ROw)')?['ezm_agentdecisionid']})",
+                      "item/ezm_Fix@odata.bind": "ezm_remediationcatalogs(@{items('Apply_to_each_(For_Catalog)')?['ezm_remediationcatalogid']})",
+                      "item/ezm_requeststatus": 791760000,
+                      "item/ezm_requesteremail": "@triggerBody()['text_2']",
+                      "item/ezm_targetuseremail": "@triggerBody()['text_1']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Remember_Request_Number": {
+                  "runAfter": {
+                    "Create_Remediation_Request": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "5d91d33d-46dc-4489-ab67-c0c2ff0b2b18"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "RequestNumber",
+                    "value": "@outputs('Create_Remediation_Request')?['body/ezm_requestnumber']"
+                  }
+                },
+                "Mark_Handled_By_Remediation": {
+                  "runAfter": {
+                    "Remember_Request_Number": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "01f71029-9128-4de9-9798-882c86252116"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateOnlyRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "ezm_agentdecisions",
+                      "recordId": "@items('Apply_to_each_(For_Decision_ROw)')?['ezm_agentdecisionid']",
+                      "item/ezm_handledby": 791760003
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "ee686181-2bb4-464b-825b-c4f48ba27f62"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "Find_Latest_Decision": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "84f336d3-05b7-4abb-a390-ad98d9c1fce5"
+          },
+          "type": "Foreach"
+        },
+        "Respond_to_Copilot": {
+          "runAfter": {
+            "Apply_to_each_(For_Catalog)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e2c34b30-4b9f-48e8-82e9-ecea7e38f580"
+          },
+          "type": "Response",
+          "kind": "Skills",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "requestnumber": "@variables('RequestNumber')"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "requestnumber": {
+                  "title": "RequestNumber",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

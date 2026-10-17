@@ -1,0 +1,11 @@
+kind: EvaluationData
+rows:
+  - source: Manual
+    expectedExecutionSteps:
+      - kind: ExpectedToolCallStep
+        schemaName: ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision
+
+    input: Can you unlock my account?
+
+extensionData:
+  displayOrder: "1791110726336"

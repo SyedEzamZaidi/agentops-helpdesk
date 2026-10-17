@@ -1,0 +1,15 @@
+<botcomponent schemaname="mspva_6674ddc7-8eff-452e-ace3-41b460bab9f6">
+  <category>Testing</category>
+  <componenttype>19</componenttype>
+  <description>My printer isn’t working, what should I do?</description>
+  <iscustomizable>0</iscustomizable>
+  <name>My printer isn’t working, what should I do?</name>
+  <parentbotcomponentid>
+    <schemaname>mspva_1caa7046-a350-4d77-bbf5-88c3c3b9113e</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>ezm_HelpdeskAgent</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

@@ -1,0 +1,12 @@
+kind: EvaluationData
+rows:
+  - source: Edited
+    expectedOutput: Escalate
+    expectedExecutionSteps:
+      - kind: ExpectedToolCallStep
+        schemaName: ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision
+
+    input: nobody in the office can access email right now
+
+extensionData:
+  displayOrder: "1791121360591"

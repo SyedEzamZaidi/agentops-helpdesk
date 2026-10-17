@@ -1,0 +1,12 @@
+kind: EvaluationData
+rows:
+  - source: Edited
+    expectedOutput: Escalate
+    expectedExecutionSteps:
+      - kind: ExpectedToolCallStep
+        schemaName: ezm_HelpdeskAgent.action.wf_Triage_LogRoutingDecision
+
+    input: I think my account has been hacked
+
+extensionData:
+  displayOrder: "1791121360589"

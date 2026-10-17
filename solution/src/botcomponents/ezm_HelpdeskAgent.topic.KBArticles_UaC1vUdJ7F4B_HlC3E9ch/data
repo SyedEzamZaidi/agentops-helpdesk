@@ -1,0 +1,4 @@
+kind: KnowledgeSourceConfiguration
+source:
+  kind: SharePointSearchSource
+  site: https://rabudzu.sharepoint.com/sites/ITKnowledgeBase/KB%20Articles

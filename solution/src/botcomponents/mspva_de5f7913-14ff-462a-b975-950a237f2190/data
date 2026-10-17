@@ -1,0 +1,8 @@
+kind: EvaluationData
+rows:
+  - source: Imported
+    expectedOutput: Knowledge
+    input: how do I set up MFA on a new phone?
+
+extensionData:
+  displayOrder: "1791118834388"

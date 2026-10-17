@@ -1,0 +1,15 @@
+<aiskillconfig uniquename="ais_FormFillFieldOptOut_ezm_remediationrequest_ezm_runresult">
+  <aiskill>FormFillFieldOptOut</aiskill>
+  <attribute>
+    <entityid.logicalname>ezm_remediationrequest</entityid.logicalname>
+    <logicalname>ezm_runresult</logicalname>
+  </attribute>
+  <description>ezm_remediationrequest - Run Result Form fill opt out</description>
+  <entity>
+    <logicalname>ezm_remediationrequest</logicalname>
+  </entity>
+  <iscustomizable>1</iscustomizable>
+  <scope>1</scope>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</aiskillconfig>
