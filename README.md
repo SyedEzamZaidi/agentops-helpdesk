@@ -41,6 +41,7 @@ See [docs/architecture.md](docs/architecture.md) for the end-to-end flow.
 - [Topics](agent/topics.md)
 - [Knowledge agent](agent/knowledge-agent.md)
 - [Platform notes](docs/platform-notes.md)
+- [Solution source](solution/README.md)
 
 ## Build plan
 
