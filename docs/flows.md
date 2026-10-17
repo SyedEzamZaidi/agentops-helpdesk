@@ -132,3 +132,31 @@ The loops are nested because the request row needs both IDs at once; each List r
 
 ### Unit test (16 Oct 2026)
 Inputs: ENABLE_VPN_ACCESS, requester = target = the test user, an existing conversation ID. Result: Remediation Request created (Fix = Enable VPN access, linked to the Agent Decision row, Pending Approval); the decision row's Handled By changed to Remediation; other decision fields unchanged.
+
+## wf_Remediation_ProcessRequest
+
+Automated cloud flow that applies the rules, runs the approval and executes the fix. It is not a tool on any agent: the only way to start it is a new Remediation Request row, so the agent can request a change but never make one (D29). Runs on its own connections (Dataverse, Office 365 Users, Approvals, Microsoft Entra ID, Teams), all through connection references; in Test and Prod they map to a service account that owns only the `VPN-Users` group.
+
+**Trigger:** Dataverse, *When a row is added*, Remediation Requests, scope Organization. Added only, so the flow's own status updates never re-trigger it.
+
+### Steps
+
+1. **Get Catalog Fix**: Get a row by ID, Remediation Catalog, Row ID = the request's Fix (Value). The rules are read from the catalog row, not copied onto the request (policy as data, D5).
+2. **RejectReason** (String, empty). Every rule writes its reason here; one gate at the end decides.
+3. **Rule Self Service**: Self Service Only = true and Requester Email ≠ Target User Email → "This fix can only be requested for your own account."
+4. **Get requester profile** (Office 365 Users) → **Rule Department**: Eligible Departments not empty and does not contain the requester's Department → "Your department is not eligible for this fix."
+5. **Passed Rules** (RejectReason empty) → **Needs Approval** (Requires Approval = true) → **Get manager (V2)** → **Manager Approval** (Approve/Reject, first to respond, reassignment off) → **Approved** (Outcome = Approve); otherwise RejectReason = "Your manager did not approve this request."
+6. **Ready To Run** (RejectReason still empty):
+   - **Is VPN Fix** (Action Code = 791760002):
+     - Get Target Profile → **Add To VPN Group** (Entra ID, group `VPN-Users`, user = target) → request **Succeeded** ("Added to VPN-Users") → decision Outcome **Remediated** → Teams notification.
+     - Other fixes (unlock, MFA reset): request **Failed** ("Automated execution for this fix is not enabled yet.") → decision **Failed** → Teams notification that the service desk will complete it.
+   - Otherwise: request **Rejected** with RejectReason as Run Result → decision **Failed** → Teams notification with the reason.
+
+Yes/No and number comparisons use expression values (`true`, `791760002`) because a value typed into a condition is compared as text.
+
+### End-to-end test (17 Oct 2026)
+Two requests from the test pane (`I need VPN access on my laptop`): both passed self-service and department rules (Engineering) and waited at Manager Approval. The manager approved one and rejected the other.
+- Approved: requester added to `VPN-Users`, request Succeeded, decision Remediated.
+- Rejected: request Rejected with the manager reason, decision Failed.
+
+Notes from the test: approvals live in the flow's environment, so the approver needed access to the Dev environment (Basic User) to see them in the Power Automate portal; security defaults required MFA registration for the test approver. Teams notifications could not be viewed in the lab tenant (no Teams licence).

@@ -7,7 +7,7 @@
 | **Author** | Syed Ezam Zaidi |
 | **Platform** | Microsoft Copilot Studio, Power Automate, Dataverse, SharePoint, Microsoft Entra ID, ServiceNow |
 | **Environment** | Portfolio-Dev (developer environment), solution *AgentOps Helpdesk*, publisher `ezm` |
-| **Status** | Triage, logging, Knowledge with Yes/No feedback built and tested; Remediation submit flow built; ServiceNow (instance under maintenance), remaining Remediation, ops console and deployment pipeline to be built |
+| **Status** | Triage, logging, Knowledge with Yes/No feedback built and tested; Remediation built and tested end to end for VPN access; ServiceNow, unlock and MFA desktop flows, ops console and deployment pipeline to be built |
 
 Related documents: [Design decisions](decisions.md) · [Data model](data-model.md) · [Flows](flows.md) · [Platform notes](platform-notes.md) · [Triage instructions](../agent/triage-instructions.md) · [Topics](../agent/topics.md) · [Knowledge agent](../agent/knowledge-agent.md)
 
@@ -137,7 +137,8 @@ The design makes this calculation **measurable rather than estimated**: every in
 | wf_Remediation_SubmitRequest | Agent flow | Records the Remediation Request (Pending Approval) and marks the decision row | Built, unit tested |
 | wf_Triage_LogRoutingDecision | Agent flow | Creates the Agent Decision row | Built |
 | wf_Common_UpdateDecision | Agent flow | Updates the same row with handler, outcome, article, incident | Built |
-| Remediation flows | Dataverse-triggered cloud flow, approval, cloud flow (Graph), desktop flows | Eligibility, approval, execution | To build |
+| wf_Remediation_ProcessRequest | Dataverse-triggered cloud flow | Rules, manager approval, VPN execution through Entra ID, notifications | Built, tested end to end |
+| Unlock and MFA reset execution | Desktop flows | Legacy-console fixes | To build |
 | Dataverse tables | Agent Decision, Remediation Catalog, Remediation Request | Audit trail, policy, remediation lifecycle | Built |
 | IT Knowledge Base | SharePoint communication site, *KB Articles* library | Knowledge source | Built |
 | IT Ops console | Model-driven Power App | Review decisions, remediations and the catalog | To build |
@@ -233,7 +234,7 @@ Seeded fixes: unlock account (low risk, desktop flow, no approval), enable VPN a
 | `wf_ServiceNow_CreateIncident`, `wf_ServiceNow_GetMyIncidents` | When an agent calls the flow | ServiceNow topics | ServiceNow connection (integration user, `itil`) | To build |
 | `wf_ServiceNow_UpdateIncident` | Child flow | Remediation orchestration (resolve or escalate) | ServiceNow connection (integration user) | To build with Remediation |
 | `wf_Remediation_SubmitRequest` | When an agent calls the flow | Request Account Fix topic | Embedded Dataverse connection | Built, unit tested |
-| Remediation eligibility and orchestration | Dataverse: Remediation Request created | Platform | Service account | To build |
+| `wf_Remediation_ProcessRequest` | Dataverse: Remediation Request added | Platform | Connection references → service account owning `VPN-Users` | Built, tested end to end (approve and reject) |
 | Manager approval | Within the orchestration flow | Platform | Approvals | To build |
 | Enable VPN access | Child flow | Orchestration flow | Entra ID / Graph, scoped service account | To build |
 | Unlock account, reset MFA | Desktop flows | Orchestration flow | Machine and service account for the legacy console | To build |
@@ -426,7 +427,7 @@ Evaluation runs are executed in batches of five to stay under the orchestration 
 | 6 | Yes/No closing question | Done |
 | 6a | Knowledge evaluation | Next |
 | 7 | ServiceNow topics and flows: tickets, escalation, status (interactions after) | To do |
-| 8 | Remediation: submit flow (done), intake topic, rules, approval and execution flow | In progress |
+| 8 | Remediation: intake topic, submit flow, rules, approval and VPN execution | Done (unlock and MFA desktop flows to build) |
 | 9 | IT Ops console (model-driven app) | To do |
 | 10 | Publish to Teams, Dev to Test deployment, end-to-end evaluation | To do |
 
